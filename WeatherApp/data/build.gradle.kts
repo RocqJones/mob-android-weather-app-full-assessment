@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -35,6 +36,27 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    // Retrofit - exposed to dependent modules
+    api(libs.retrofit)
+    api(libs.retrofit.gson)
+    api(libs.okhttp)
+    api(libs.okhttp.logging)
+    api(libs.gson)
+
+    // Room - exposed to dependent modules
+    api(libs.room.runtime)
+    api(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+    // Coroutines - exposed to dependent modules
+    api(libs.coroutines.core)
+    api(libs.coroutines.android)
+
+    // Koin - exposed to dependent modules
+    api(libs.koin.android)
+    api(libs.koin.core)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
