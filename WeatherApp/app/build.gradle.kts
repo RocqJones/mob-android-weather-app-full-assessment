@@ -6,9 +6,7 @@ plugins {
 
 android {
     namespace = "com.jones.weatherapp"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jones.weatherapp"
