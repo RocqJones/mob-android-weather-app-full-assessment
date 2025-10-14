@@ -16,16 +16,16 @@ This project uses modularization and MVVM architecture for scalability and maint
 ### Tech Stack
 
 **Networking:**
-- Retrofit 2.9.0 - REST API client
+- Retrofit - REST API client
 - OkHttp - HTTP client with logging interceptor
 - Gson - JSON serialization/deserialization
 
 **Local Database:**
-- Room 2.6.1 - Offline data persistence
+- Room - Offline data persistence
 - SQLite - Local storage
 
 **Dependency Injection:**
-- Koin 3.5.3 - Lightweight DI framework
+- Koin - Lightweight DI framework
 
 **Async Operations:**
 - Kotlin Coroutines - Asynchronous programming
@@ -33,6 +33,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 
 **Code Quality:**
 - KtLint - Code formatting and linting
+- KSP - Kotlin Symbol Processing
 
 **UI Framework:**
 - Jetpack Compose - Modern declarative UI

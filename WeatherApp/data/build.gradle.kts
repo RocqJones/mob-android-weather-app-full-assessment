@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -47,7 +47,7 @@ dependencies {
     // Room - exposed to dependent modules
     api(libs.room.runtime)
     api(libs.room.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // Coroutines - exposed to dependent modules
     api(libs.coroutines.core)
