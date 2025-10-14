@@ -14,5 +14,5 @@ data class ForecastEntity(
     val temperature: Double?,
     val weatherDescription: String?,
     val weatherIcon: String?,
-    val dateText: String?
+    val dateText: String?,
 )

@@ -11,31 +11,32 @@ import java.util.concurrent.TimeUnit
 /**
  * Koin module for network-related dependencies.
  */
-val networkModule = module {
-    single {
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+val networkModule =
+    module {
+        single {
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+        }
+
+        single {
+            OkHttpClient.Builder()
+                .addInterceptor(get<HttpLoggingInterceptor>())
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+        }
+
+        single {
+            Retrofit.Builder()
+                .baseUrl("https://api.openweathermap.org/")
+                .client(get())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+
+        single {
+            get<Retrofit>().create(WeatherApiService::class.java)
         }
     }
-
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(get<HttpLoggingInterceptor>())
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
-    }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
-            .client(get())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    single {
-        get<Retrofit>().create(WeatherApiService::class.java)
-    }
-}

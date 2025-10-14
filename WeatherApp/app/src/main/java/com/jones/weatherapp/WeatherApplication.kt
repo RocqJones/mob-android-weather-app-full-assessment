@@ -8,7 +8,6 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 class WeatherApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
 
@@ -19,4 +18,3 @@ class WeatherApplication : Application() {
         }
     }
 }
-

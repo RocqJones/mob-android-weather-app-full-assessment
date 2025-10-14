@@ -3,8 +3,9 @@ package com.jones.di
 /**
  * Aggregated Koin modules in our app.
  */
-val appModules = listOf(
-    networkModule,
-    databaseModule,
-    repositoryModule
-)
+val appModules =
+    listOf(
+        networkModule,
+        databaseModule,
+        repositoryModule,
+    )

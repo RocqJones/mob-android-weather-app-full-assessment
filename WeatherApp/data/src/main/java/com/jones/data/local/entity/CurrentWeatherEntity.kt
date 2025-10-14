@@ -12,5 +12,5 @@ data class CurrentWeatherEntity(
     val temperature: Double?,
     val weatherDescription: String?,
     val weatherIcon: String?,
-    val timestamp: Long?
+    val timestamp: Long?,
 )

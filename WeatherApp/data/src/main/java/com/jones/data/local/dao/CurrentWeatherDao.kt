@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CurrentWeatherDao {
-
     @Query("SELECT * FROM current_weather WHERE id = :cityId")
     fun getCurrentWeather(cityId: Int): Flow<CurrentWeatherEntity?>
 
@@ -16,4 +15,3 @@ interface CurrentWeatherDao {
     @Query("DELETE FROM current_weather")
     suspend fun deleteAll()
 }
-

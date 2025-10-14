@@ -10,27 +10,35 @@ import kotlinx.coroutines.flow.Flow
 class WeatherRepositoryImpl(
     private val apiService: WeatherApiService,
     private val currentWeatherDao: CurrentWeatherDao,
-    private val forecastDao: ForecastDao
+    private val forecastDao: ForecastDao,
 ) : WeatherRepository {
-
-    override suspend fun fetchCurrentWeather(latitude: Double, longitude: Double, apiKey: String) {
+    override suspend fun fetchCurrentWeather(
+        latitude: Double,
+        longitude: Double,
+        apiKey: String,
+    ) {
         val response = apiService.getCurrentWeather(latitude, longitude, apiKey)
 
-        val entity = CurrentWeatherEntity(
-            id = response.id ?: 0,
-            cityName = response.name,
-            latitude = response.coord?.lat,
-            longitude = response.coord?.lon,
-            temperature = response.main?.temp,
-            weatherDescription = response.weather?.firstOrNull()?.description,
-            weatherIcon = response.weather?.firstOrNull()?.icon,
-            timestamp = response.dt
-        )
+        val entity =
+            CurrentWeatherEntity(
+                id = response.id ?: 0,
+                cityName = response.name,
+                latitude = response.coord?.lat,
+                longitude = response.coord?.lon,
+                temperature = response.main?.temp,
+                weatherDescription = response.weather?.firstOrNull()?.description,
+                weatherIcon = response.weather?.firstOrNull()?.icon,
+                timestamp = response.dt,
+            )
 
         currentWeatherDao.insertCurrentWeather(entity)
     }
 
-    override suspend fun fetchForecast(latitude: Double, longitude: Double, apiKey: String) {
+    override suspend fun fetchForecast(
+        latitude: Double,
+        longitude: Double,
+        apiKey: String,
+    ) {
         val response = apiService.getForecast(latitude, longitude, apiKey)
 
         val cityId = response.city?.id ?: 0
@@ -38,20 +46,21 @@ class WeatherRepositoryImpl(
         val lat = response.city?.coord?.lat
         val lon = response.city?.coord?.lon
 
-        val entities = response.list?.map { item ->
-            ForecastEntity(
-                id = 0, // Auto-generated
-                cityId = cityId,
-                cityName = cityName,
-                latitude = lat,
-                longitude = lon,
-                timestamp = item.dt,
-                temperature = item.main?.temp,
-                weatherDescription = item.weather?.firstOrNull()?.description,
-                weatherIcon = item.weather?.firstOrNull()?.icon,
-                dateText = item.dtTxt
-            )
-        } ?: emptyList()
+        val entities =
+            response.list?.map { item ->
+                ForecastEntity(
+                    id = 0, // Auto-generated
+                    cityId = cityId,
+                    cityName = cityName,
+                    latitude = lat,
+                    longitude = lon,
+                    timestamp = item.dt,
+                    temperature = item.main?.temp,
+                    weatherDescription = item.weather?.firstOrNull()?.description,
+                    weatherIcon = item.weather?.firstOrNull()?.icon,
+                    dateText = item.dtTxt,
+                )
+            } ?: emptyList()
 
         forecastDao.deleteForecastByCity(cityId)
         forecastDao.insertForecast(entities)

@@ -8,7 +8,7 @@ data class ForecastResponse(
     @SerializedName("message") val message: Int?,
     @SerializedName("cnt") val cnt: Int?,
     @SerializedName("list") val list: List<ForecastItem>?,
-    @SerializedName("city") val city: City?
+    @SerializedName("city") val city: City?,
 )
 
 data class ForecastItem(
@@ -20,7 +20,7 @@ data class ForecastItem(
     @SerializedName("visibility") val visibility: Int?,
     @SerializedName("pop") val pop: Double?,
     @SerializedName("sys") val sys: SysForecast?,
-    @SerializedName("dt_txt") val dtTxt: String?
+    @SerializedName("dt_txt") val dtTxt: String?,
 )
 
 data class City(
@@ -31,9 +31,9 @@ data class City(
     @SerializedName("population") val population: Int?,
     @SerializedName("timezone") val timezone: Int?,
     @SerializedName("sunrise") val sunrise: Long?,
-    @SerializedName("sunset") val sunset: Long?
+    @SerializedName("sunset") val sunset: Long?,
 )
 
 data class SysForecast(
-    @SerializedName("pod") val pod: String?
+    @SerializedName("pod") val pod: String?,
 )

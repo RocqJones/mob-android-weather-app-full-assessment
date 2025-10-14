@@ -7,12 +7,13 @@ import org.koin.dsl.module
 /**
  * Koin module for our repository dependencies.
  */
-val repositoryModule = module {
-    single<WeatherRepository> {
-        WeatherRepositoryImpl(
-            apiService = get(),
-            currentWeatherDao = get(),
-            forecastDao = get()
-        )
+val repositoryModule =
+    module {
+        single<WeatherRepository> {
+            WeatherRepositoryImpl(
+                apiService = get(),
+                currentWeatherDao = get(),
+                forecastDao = get(),
+            )
+        }
     }
-}

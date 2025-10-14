@@ -10,10 +10,10 @@ import com.jones.data.local.entity.ForecastEntity
 @Database(
     entities = [CurrentWeatherEntity::class, ForecastEntity::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
+
     abstract fun forecastDao(): ForecastDao
 }
-

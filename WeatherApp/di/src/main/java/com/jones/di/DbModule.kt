@@ -8,16 +8,17 @@ import org.koin.dsl.module
 /**
  * Koin module for our database-related dependencies.
  */
-val databaseModule = module {
-    single {
-        Room.databaseBuilder(
-            androidContext(),
-            WeatherDatabase::class.java,
-            "weather_database"
-        ).fallbackToDestructiveMigration()
-            .build()
-    }
+val databaseModule =
+    module {
+        single {
+            Room.databaseBuilder(
+                androidContext(),
+                WeatherDatabase::class.java,
+                "weather_database",
+            ).fallbackToDestructiveMigration()
+                .build()
+        }
 
-    single { get<WeatherDatabase>().currentWeatherDao() }
-    single { get<WeatherDatabase>().forecastDao() }
-}
+        single { get<WeatherDatabase>().currentWeatherDao() }
+        single { get<WeatherDatabase>().forecastDao() }
+    }
