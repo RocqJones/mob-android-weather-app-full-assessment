@@ -20,13 +20,14 @@ class WeatherSyncService(
     fun startNetworkMonitoring(onConnected: suspend () -> Unit) {
         onNetworkAvailable = onConnected
 
-        networkMonitorJob = networkConnectivityService.observeNetworkConnectivity().onEach { isConnected ->
-            if (isConnected) {
-                scope.launch {
-                    onNetworkAvailable?.invoke()
+        networkMonitorJob =
+            networkConnectivityService.observeNetworkConnectivity().onEach { isConnected ->
+                if (isConnected) {
+                    scope.launch {
+                        onNetworkAvailable?.invoke()
+                    }
                 }
-            }
-        }.launchIn(scope)
+            }.launchIn(scope)
     }
 
     /**
@@ -43,4 +44,3 @@ class WeatherSyncService(
      */
     fun isNetworkAvailable(): Boolean = networkConnectivityService.isNetworkAvailable()
 }
-

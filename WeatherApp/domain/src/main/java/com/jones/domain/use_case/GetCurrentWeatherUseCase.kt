@@ -21,4 +21,3 @@ class GetCurrentWeatherUseCase(
         return repository.getCurrentWeatherFromDb(cityId)
     }
 }
-

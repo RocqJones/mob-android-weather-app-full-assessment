@@ -19,4 +19,3 @@ fun <T> Result<T>.getOrNull(): T? =
         is Result.Success -> data
         else -> null
     }
-

@@ -32,4 +32,3 @@ val coreModule =
             )
         }
     }
-
