@@ -43,7 +43,11 @@ dependencies {
     // Google Play Services Location
     implementation(libs.play.services.location)
 
+    // Testing dependencies
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlin.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
