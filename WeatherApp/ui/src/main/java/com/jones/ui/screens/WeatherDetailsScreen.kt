@@ -20,7 +20,7 @@ import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.ui.components.CurrentWeatherCard
 import com.jones.ui.components.ForecastCard
-import com.jones.ui.components.OnlineStatusMessage
+import com.jones.ui.components.OfflineMessage
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
 import java.text.SimpleDateFormat
@@ -113,9 +113,12 @@ private fun WeatherDetailsContent(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp)
     ) {
-        item {
-            OnlineStatusMessage(isOnline = isOnline)
-            Spacer(modifier = Modifier.height(16.dp))
+        // Show offline message only when offline
+        if (!isOnline) {
+            item {
+                OfflineMessage()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
 
         item {

@@ -94,11 +94,6 @@ fun WeatherContent(
         contentPadding = PaddingValues(16.dp)
     ) {
         item {
-            OnlineStatusMessage(isOnline = isOnline)
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
-        item {
             currentWeather?.let {
                 CurrentWeatherCard(weather = it)
                 Spacer(modifier = Modifier.height(16.dp))
@@ -147,4 +142,3 @@ fun WeatherContent(
         }
     }
 }
-

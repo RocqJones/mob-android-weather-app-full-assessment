@@ -5,9 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jones.data.local.entity.ForecastEntity
+import com.jones.ui.util.getWeatherIcon
 import java.util.*
 
 @Composable
@@ -29,6 +31,15 @@ fun ForecastCard(forecast: ForecastEntity) {
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold
                 )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Icon(
+                    painter = painterResource(id = getWeatherIcon(forecast.weatherMain)),
+                    contentDescription = "Weather Icon",
+                    modifier = Modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = forecast.weatherDescription?.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
@@ -48,4 +59,3 @@ fun ForecastCard(forecast: ForecastEntity) {
 }
 
 private fun kelvinToCelsius(kelvin: Double): Int = (kelvin - 273.15).toInt()
-
