@@ -12,13 +12,14 @@ import kotlinx.coroutines.flow.onStart
 class GetForecastUseCase(
     private val repository: WeatherRepository,
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     ): Flow<List<ForecastEntity>> {
         return repository.getForecastFromDb().onStart {
-            repository.fetchForecast(latitude, longitude, apiKey)
+            repository.fetchForecast(latitude, longitude, apiKey, count)
         }
     }
 }

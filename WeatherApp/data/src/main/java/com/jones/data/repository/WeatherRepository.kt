@@ -16,6 +16,7 @@ interface WeatherRepository {
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     )
 
     // Local data sources

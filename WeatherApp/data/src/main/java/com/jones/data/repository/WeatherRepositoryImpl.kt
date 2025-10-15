@@ -52,6 +52,7 @@ class WeatherRepositoryImpl(
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     ) {
         // Only fetch from API if network is available
         if (!networkConnectivityService.isNetworkAvailable()) {
@@ -59,7 +60,7 @@ class WeatherRepositoryImpl(
         }
 
         try {
-            val response = apiService.getForecast(latitude, longitude, apiKey)
+            val response = apiService.getForecast(latitude, longitude, apiKey, count)
 
             val cityName = response.city?.name
 

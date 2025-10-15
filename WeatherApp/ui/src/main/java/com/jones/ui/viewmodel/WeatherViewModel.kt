@@ -23,7 +23,10 @@ class WeatherViewModel(
     val uiState: StateFlow<WeatherUiState> = _uiState
     private val latitude = Constants.DEFAULT_LATITUDE
     private val longitude = Constants.DEFAULT_LONGITUDE
+    private val cnt = Constants.DEFAULT_COUNT
+
     private val apiKey = Constants.API_KEY
+
 
     init {
         startNetworkMonitoring()
@@ -41,7 +44,7 @@ class WeatherViewModel(
         viewModelScope.launch {
             try {
                 val currentWeatherFlow = getCurrentWeatherUseCase(latitude, longitude, apiKey)
-                val forecastFlow = getForecastUseCase(latitude, longitude, apiKey)
+                val forecastFlow = getForecastUseCase(latitude, longitude, apiKey, cnt)
 
                 // Combine both flows for reactive updates
                 combine(currentWeatherFlow, forecastFlow) { currentWeather, forecast ->

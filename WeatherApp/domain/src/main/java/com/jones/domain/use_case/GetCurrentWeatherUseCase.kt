@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.onStart
 class GetCurrentWeatherUseCase(
     private val repository: WeatherRepository,
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         latitude: Double,
         longitude: Double,
         apiKey: String,
