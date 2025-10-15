@@ -9,14 +9,15 @@ import org.koin.dsl.module
 /**
  * Aggregated Koin modules in our app.
  */
-val appModule = module {
-    // Use cases
-    single { GetCurrentWeatherUseCase(get()) }
-    single { GetForecastUseCase(get()) }
+val appModule =
+    module {
+        // Use cases
+        single { GetCurrentWeatherUseCase(get()) }
+        single { GetForecastUseCase(get()) }
 
-    // ViewModel
-    viewModel { WeatherViewModel(get(), get(), get()) }
-}
+        // ViewModel
+        viewModel { WeatherViewModel(get(), get(), get()) }
+    }
 
 val appModules =
     listOf(
@@ -24,5 +25,5 @@ val appModules =
         networkModule,
         databaseModule,
         repositoryModule,
-        appModule
+        appModule,
     )

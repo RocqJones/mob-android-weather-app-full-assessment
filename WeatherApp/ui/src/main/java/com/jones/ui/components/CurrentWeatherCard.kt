@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
 import com.jones.core.util.kelvinToCelsius
 import com.jones.data.local.entity.CurrentWeatherEntity
@@ -26,10 +27,16 @@ import com.jones.ui.util.getWeatherIcon
 import java.util.Locale
 
 @Composable
-fun CurrentWeatherCard(weather: CurrentWeatherEntity) {
+fun CurrentWeatherCard(
+    weather: CurrentWeatherEntity,
+    navController: NavController? = null
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = {
+            navController?.navigate("weather_details")
+        }
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

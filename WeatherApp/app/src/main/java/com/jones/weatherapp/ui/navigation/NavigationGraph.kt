@@ -19,27 +19,26 @@ import com.jones.ui.viewmodel.WeatherViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NavigationGraph(
-    weatherViewModel: WeatherViewModel = koinViewModel()
-) {
+fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.WeatherHome.route
+        startDestination = Screen.WeatherHome.route,
     ) {
         composable(Screen.WeatherHome.route) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(WindowInsets.statusBars.asPaddingValues())
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(WindowInsets.statusBars.asPaddingValues()),
             ) {
                 val uiState by weatherViewModel.uiState.collectAsState()
 
                 HomeScreen(
                     uiState = uiState,
                     onRetry = { weatherViewModel.fetchWeather() },
-                    navController = navController
+                    navController = navController,
                 )
             }
         }
@@ -50,7 +49,7 @@ fun NavigationGraph(
             WeatherDetailsScreen(
                 navController = navController,
                 uiState = uiState,
-                onRetry = { weatherViewModel.fetchWeather() }
+                onRetry = { weatherViewModel.fetchWeather() },
             )
         }
     }

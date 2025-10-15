@@ -8,7 +8,8 @@ enum class WeatherType(val apiValue: String, val drawableName: String) {
     CLEAR("Clear", "sunny"),
     CLOUDS("Clouds", "cloudy"),
     RAIN("Rain", "rainy"),
-    SNOW("Snow", "forest");
+    SNOW("Snow", "forest"),
+    ;
 
     companion object {
         /**

@@ -95,18 +95,7 @@ fun WeatherContent(
     ) {
         item {
             currentWeather?.let {
-                CurrentWeatherCard(weather = it)
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Add "View Details" button
-                navController?.let { nav ->
-                    Button(
-                        onClick = { nav.navigate("weather_details") },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("View Detailed Weather Information")
-                    }
-                }
+                CurrentWeatherCard(weather = it, navController)
 
                 Spacer(modifier = Modifier.height(24.dp))
             } ?: run {

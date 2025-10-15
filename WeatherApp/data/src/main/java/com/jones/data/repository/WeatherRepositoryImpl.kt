@@ -61,7 +61,7 @@ class WeatherRepositoryImpl(
         }
 
         try {
-            val response = apiService.getForecast(latitude, longitude, apiKey, count)
+            val response = apiService.getForecast(latitude, longitude, apiKey)
 
             val cityName = response.city?.name
 

@@ -23,7 +23,10 @@ fun kelvinToFahrenheit(kelvin: Double): Int = ((kelvin - 273.15) * 9 / 5 + 32).t
  * @param pattern Date format pattern (default: "MMM dd, yyyy HH:mm")
  * @return Formatted date-time string
  */
-fun formatTimestamp(timestamp: Long, pattern: String = "MMM dd, yyyy HH:mm"): String {
+fun formatTimestamp(
+    timestamp: Long,
+    pattern: String = "MMM dd, yyyy HH:mm",
+): String {
     val sdf = SimpleDateFormat(pattern, Locale.getDefault())
     return sdf.format(Date(timestamp * 1000))
 }
