@@ -3,7 +3,6 @@ package com.jones.domain.use_case
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onStart
 
 /**
  * Gets current weather with offline-first approach.
@@ -12,13 +11,13 @@ import kotlinx.coroutines.flow.onStart
 class GetCurrentWeatherUseCase(
     private val repository: WeatherRepository,
 ) {
-    operator fun invoke(
+    suspend operator fun invoke(
         latitude: Double,
         longitude: Double,
         apiKey: String,
     ): Flow<CurrentWeatherEntity?> {
-        return repository.getCurrentWeatherFromDb(0).onStart {
-            repository.fetchCurrentWeather(latitude, longitude, apiKey)
-        }
+        repository.fetchCurrentWeather(latitude, longitude, apiKey)
+
+        return repository.getCurrentWeatherFromDb(0)
     }
 }
