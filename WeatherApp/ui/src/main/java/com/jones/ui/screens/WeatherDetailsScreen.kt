@@ -164,17 +164,20 @@ private fun WeatherDetailsContent(
             )
         }
 
-        if (forecast.isNullOrEmpty()) {
-            item {
-                Text(
-                    text = "No forecast data available",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+        when {
+            forecast.isNullOrEmpty() -> {
+                item {
+                    Text(
+                        text = "No forecast data available",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
-        } else {
-            items(forecast) { forecastItem ->
-                ForecastCard(forecast = forecastItem)
-                Spacer(modifier = Modifier.height(8.dp))
+            else -> {
+                items(forecast) { forecastItem ->
+                    ForecastCard(forecast = forecastItem)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         }
     }

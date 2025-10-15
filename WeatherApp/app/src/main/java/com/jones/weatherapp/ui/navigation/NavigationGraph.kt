@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jones.ui.location.rememberLocationState
 import com.jones.ui.screens.HomeScreen
 import com.jones.ui.screens.WeatherDetailsScreen
 import com.jones.ui.viewmodel.WeatherViewModel
@@ -21,6 +22,10 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
     val navController = rememberNavController()
+
+    val locationState = rememberLocationState { coordinates ->
+        weatherViewModel.updateLocation(coordinates)
+    }
 
     NavHost(
         navController = navController,

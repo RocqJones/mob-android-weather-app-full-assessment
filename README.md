@@ -7,13 +7,15 @@ This project uses modularization and MVVM architecture for scalability and maint
 **Modules:**
 
 - **app**: Entry point, navigation, initialization, Koin setup.
-- **core**: Shared utilities, constants, base classes, network connectivity service.
+- **core**: Shared utilities, constants, base classes, network connectivity service, location services.
 - **di**: Dependency injection modules (Koin configuration for Retrofit, Room, Repositories).
 - **ui**: Modular presentation layer with MVVM architecture
   - `screens/`: Screen-level composables
   - `components/`: Reusable UI components
   - `viewmodel/`: ViewModels for state management
   - `state/`: UI state classes
+  - `location/`: Location composables and state management
+  - `util/`: UI utilities (weather backgrounds, icons)
 - **domain**: Business logic, use cases, domain models.
 - **data**: Repositories, data sources, API (Retrofit), offline support (Room DB), sync service.
 
@@ -33,6 +35,10 @@ This project uses modularization and MVVM architecture for scalability and maint
 **Async Operations:**
 - Kotlin Coroutines - Asynchronous programming
 - Flow - Reactive data streams
+
+**Location Services:**
+- Google Play Services Location - Automatic location detection
+- FusedLocationProviderClient - Efficient location updates
 
 **Code Quality:**
 - KtLint - Code formatting and linting
@@ -86,6 +92,11 @@ data → core
  ├─ Retrofit (API)
  ├─ Room (Database)
  └─ Network Service
+
+core
+ ├─ Location Services
+ ├─ Weather Utilities
+ └─ Constants
 ```
 
 ### Key Features
@@ -94,18 +105,30 @@ data → core
 ✅ MVVM pattern with clear separation of concerns  
 ✅ Offline-first with Room database caching  
 ✅ Real-time network monitoring and auto-sync  
+✅ Automatic location detection with runtime permissions  
+✅ Dynamic weather-based backgrounds and icons  
 ✅ Reactive UI with Kotlin Flow  
 ✅ Dependency injection with Koin  
 ✅ RESTful API integration with Retrofit  
+✅ Temperature conversion utilities (Celsius/Fahrenheit)  
+✅ Date/time formatting utilities  
 ✅ Null-safe data models  
 ✅ Code quality enforcement with KtLint  
 ✅ Error handling with Result sealed class  
+✅ Material Design 3 theming  
+✅ Composable location state management  
 
-### Security
+### Security & Permissions
 
+**API Security:**
 - API keys stored in `local.properties` (not version controlled)
 - BuildConfig integration for secure key access
-- Internet and network state permissions configured
+
+**Required Permissions:**
+- `INTERNET` - Network access for API calls
+- `ACCESS_NETWORK_STATE` - Monitor network connectivity
+- `ACCESS_FINE_LOCATION` - Precise location for accurate weather
+- `ACCESS_COARSE_LOCATION` - Approximate location as fallback
 
 ### Development Setup
 
@@ -113,6 +136,14 @@ data → core
 2. Add `WEATHER_API_KEY=your_api_key_here` to `local.properties`
 3. Sync Gradle dependencies
 4. Run the app
+5. Grant location permission when prompted
+
+### UI Components
+- **Screens:** - User-facing screens
+- **Reusable Components:** - reusable UI elements
+- **ViewModels:** - State management for screens
+- **State Classes:** - UI state representations
+- **Location Composable:** - Location permission and fetching
 
 ### Code Quality
 

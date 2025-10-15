@@ -3,6 +3,7 @@ package com.jones.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jones.core.constants.Constants
+import com.jones.core.location.Coordinates
 import com.jones.data.sync.WeatherSyncService
 import com.jones.domain.use_case.GetCurrentWeatherUseCase
 import com.jones.domain.use_case.GetForecastUseCase
@@ -21,8 +22,8 @@ class WeatherViewModel(
 
     private val _uiState = MutableStateFlow<WeatherUiState>(WeatherUiState.Loading)
     val uiState: StateFlow<WeatherUiState> = _uiState
-    private val latitude = Constants.DEFAULT_LATITUDE
-    private val longitude = Constants.DEFAULT_LONGITUDE
+
+    private var currentCoordinates: Coordinates? = null
     private val cnt = Constants.DEFAULT_COUNT
 
     private val apiKey = Constants.API_KEY
@@ -30,16 +31,37 @@ class WeatherViewModel(
 
     init {
         startNetworkMonitoring()
-        fetchWeather()
     }
 
     private fun startNetworkMonitoring() {
         weatherSyncService.startNetworkMonitoring {
-            fetchWeather()
+            currentCoordinates?.let { coords ->
+                fetchWeatherForLocation(coords.latitude, coords.longitude)
+            }
         }
     }
 
+    /**
+     * Update the location and fetch weather for the new coordinates
+     */
+    fun updateLocation(coordinates: Coordinates) {
+        currentCoordinates = coordinates
+        fetchWeatherForLocation(coordinates.latitude, coordinates.longitude)
+    }
+
     fun fetchWeather() {
+        val coords = currentCoordinates
+        when {
+            coords != null -> {
+                fetchWeatherForLocation(coords.latitude, coords.longitude)
+            }
+            else -> {
+                fetchWeatherForLocation(Constants.DEFAULT_LATITUDE, Constants.DEFAULT_LONGITUDE)
+            }
+        }
+    }
+
+    private fun fetchWeatherForLocation(latitude: Double, longitude: Double) {
         _uiState.value = WeatherUiState.Loading
         viewModelScope.launch {
             try {

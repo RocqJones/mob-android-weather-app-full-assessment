@@ -40,6 +40,9 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
+    // Google Play Services Location
+    implementation(libs.play.services.location)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,7 @@ fun CurrentWeatherCard(
                     painter = painterResource(id = getWeatherIcon(weather.weatherMain)),
                     contentDescription = "Weather Icon",
                     modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = Color.Unspecified
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
