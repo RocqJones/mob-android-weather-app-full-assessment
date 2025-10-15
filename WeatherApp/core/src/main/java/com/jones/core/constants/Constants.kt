@@ -6,5 +6,5 @@ object Constants {
     // Default coordinates
     const val DEFAULT_LATITUDE = -1.299657300813898
     const val DEFAULT_LONGITUDE = 36.81313079227201
-    const val DEFAULT_COUNT = 5
+    const val DEFAULT_COUNT = 7
 }

@@ -18,7 +18,7 @@ fun kelvinToCelsius(kelvin: Double): Int = (kelvin - 273.15).toInt()
 fun kelvinToFahrenheit(kelvin: Double): Int = ((kelvin - 273.15) * 9 / 5 + 32).toInt()
 
 /**
- * Formats a Unix timestamp to a readable date-time string.
+ * Formats timestamp to readable date-time string.
  * @param timestamp Unix timestamp in seconds
  * @param pattern Date format pattern (default: "MMM dd, yyyy HH:mm")
  * @return Formatted date-time string
@@ -34,6 +34,23 @@ fun formatTimestamp(timestamp: Long, pattern: String = "MMM dd, yyyy HH:mm"): St
  * @return Formatted full date-time string
  */
 fun formatFullTimestamp(timestamp: Long): String {
-    return formatTimestamp(timestamp, "EEEE, MMM dd, yyyy")
+    return formatTimestamp(timestamp, "EEEE, MMM dd, yyyy - HH:mm a")
 }
 
+/**
+ * Converts from "yyyy-MM-dd HH:mm:ss" format to "EEEE, MMM dd, yyyy" format.
+ * @param dateText Date string in format "yyyy-MM-dd HH:mm:ss"
+ * @return Formatted date string with day of week, or original string if parsing fails
+ */
+fun formatForecastDate(dateText: String?): String {
+    if (dateText.isNullOrBlank()) return "Unknown date"
+
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("EEEE, MMM dd, yyyy - HH:mm a", Locale.getDefault())
+        val date = inputFormat.parse(dateText)
+        date?.let { outputFormat.format(it) } ?: dateText
+    } catch (e: Exception) {
+        dateText
+    }
+}

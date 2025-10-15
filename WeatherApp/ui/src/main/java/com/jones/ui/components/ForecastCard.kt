@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.jones.core.util.formatForecastDate
 import com.jones.core.util.kelvinToCelsius
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.ui.util.getWeatherIcon
@@ -28,7 +29,7 @@ fun ForecastCard(forecast: ForecastEntity) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = forecast.dateText ?: "Unknown date",
+                    text = formatForecastDate(forecast.dateText),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold
                 )

@@ -69,16 +69,6 @@ fun CurrentWeatherCard(weather: CurrentWeatherEntity) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            weather.latitude?.let { lat ->
-                weather.longitude?.let { lon ->
-                    Text(
-                        text = "Location: ${"%.2f".format(lat)}, ${"%.2f".format(lon)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-
             weather.timestamp?.let {
                 Text(
                     text = "Last Updated: ${formatFullTimestamp(it)}",
