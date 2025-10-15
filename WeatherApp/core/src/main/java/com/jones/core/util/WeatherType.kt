@@ -18,7 +18,7 @@ enum class WeatherType(val apiValue: String, val drawableName: String) {
         fun fromWeatherMain(weatherMain: String?): WeatherType {
             return entries.find {
                 it.apiValue.equals(weatherMain, ignoreCase = true)
-            } ?: SNOW
+            } ?: CLOUDS
         }
 
         /**
