@@ -16,6 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.jones.core.util.formatFullTimestamp
+import com.jones.core.util.kelvinToCelsius
+import com.jones.core.util.kelvinToFahrenheit
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.ui.components.CurrentWeatherCard
@@ -23,7 +26,6 @@ import com.jones.ui.components.ForecastCard
 import com.jones.ui.components.OfflineMessage
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
-import java.text.SimpleDateFormat
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +115,6 @@ private fun WeatherDetailsContent(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp)
     ) {
-        // Show offline message only when offline
         if (!isOnline) {
             item {
                 OfflineMessage()
@@ -302,13 +303,4 @@ private fun ErrorContent(
             Text("Retry")
         }
     }
-}
-
-private fun kelvinToCelsius(kelvin: Double): Int = (kelvin - 273.15).toInt()
-
-private fun kelvinToFahrenheit(kelvin: Double): Int = ((kelvin - 273.15) * 9 / 5 + 32).toInt()
-
-private fun formatFullTimestamp(timestamp: Long): String {
-    val sdf = SimpleDateFormat("EEEE, MMM dd, yyyy 'at' HH:mm:ss", Locale.getDefault())
-    return sdf.format(Date(timestamp * 1000))
 }

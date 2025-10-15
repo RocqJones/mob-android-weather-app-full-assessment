@@ -1,17 +1,29 @@
 package com.jones.ui.components
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.jones.core.util.formatFullTimestamp
+import com.jones.core.util.kelvinToCelsius
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.ui.util.getWeatherIcon
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @Composable
 fun CurrentWeatherCard(weather: CurrentWeatherEntity) {
@@ -52,7 +64,7 @@ fun CurrentWeatherCard(weather: CurrentWeatherEntity) {
                 text = weather.weatherDescription?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                 } ?: "No description",
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyMedium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -69,18 +81,11 @@ fun CurrentWeatherCard(weather: CurrentWeatherEntity) {
 
             weather.timestamp?.let {
                 Text(
-                    text = "Updated: ${formatTimestamp(it)}",
+                    text = "Last Updated: ${formatFullTimestamp(it)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
     }
-}
-
-private fun kelvinToCelsius(kelvin: Double): Int = (kelvin - 273.15).toInt()
-
-private fun formatTimestamp(timestamp: Long): String {
-    val sdf = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
-    return sdf.format(Date(timestamp * 1000))
 }

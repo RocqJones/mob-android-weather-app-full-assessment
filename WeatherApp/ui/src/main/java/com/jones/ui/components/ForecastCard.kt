@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.jones.core.util.kelvinToCelsius
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.ui.util.getWeatherIcon
 import java.util.*
@@ -57,5 +58,3 @@ fun ForecastCard(forecast: ForecastEntity) {
         }
     }
 }
-
-private fun kelvinToCelsius(kelvin: Double): Int = (kelvin - 273.15).toInt()
