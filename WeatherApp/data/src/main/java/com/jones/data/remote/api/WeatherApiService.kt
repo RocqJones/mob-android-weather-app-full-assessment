@@ -18,5 +18,6 @@ interface WeatherApiService {
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
         @Query("appid") apiKey: String,
+        // @Query("cnt") count: Int,
     ): ForecastResponse
 }

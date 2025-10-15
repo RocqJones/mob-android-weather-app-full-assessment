@@ -12,12 +12,13 @@ class GetForecastUseCase(
     private val repository: WeatherRepository,
 ) {
     suspend operator fun invoke(
-        cityId: Int,
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     ): Flow<List<ForecastEntity>> {
-        repository.fetchForecast(latitude, longitude, apiKey)
-        return repository.getForecastFromDb(cityId)
+        repository.fetchForecast(latitude, longitude, apiKey, count)
+
+        return repository.getForecastFromDb()
     }
 }

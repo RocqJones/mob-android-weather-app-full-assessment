@@ -1,12 +1,29 @@
 package com.jones.di
 
+import com.jones.domain.use_case.GetCurrentWeatherUseCase
+import com.jones.domain.use_case.GetForecastUseCase
+import com.jones.ui.viewmodel.WeatherViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+
 /**
  * Aggregated Koin modules in our app.
  */
+val appModule =
+    module {
+        // Use cases
+        single { GetCurrentWeatherUseCase(get()) }
+        single { GetForecastUseCase(get()) }
+
+        // ViewModel
+        viewModel { WeatherViewModel(get(), get(), get()) }
+    }
+
 val appModules =
     listOf(
         coreModule,
         networkModule,
         databaseModule,
         repositoryModule,
+        appModule,
     )

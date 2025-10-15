@@ -32,11 +32,12 @@ class WeatherRepositoryImpl(
 
             val entity =
                 CurrentWeatherEntity(
-                    id = response.id ?: 0,
+                    id = 0,
                     cityName = response.name,
-                    latitude = response.coord?.lat,
-                    longitude = response.coord?.lon,
+                    latitude = latitude,
+                    longitude = longitude,
                     temperature = response.main?.temp,
+                    weatherMain = response.weather?.firstOrNull()?.main,
                     weatherDescription = response.weather?.firstOrNull()?.description,
                     weatherIcon = response.weather?.firstOrNull()?.icon,
                     timestamp = response.dt,
@@ -52,6 +53,7 @@ class WeatherRepositoryImpl(
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     ) {
         // Only fetch from API if network is available
         if (!networkConnectivityService.isNetworkAvailable()) {
@@ -61,28 +63,25 @@ class WeatherRepositoryImpl(
         try {
             val response = apiService.getForecast(latitude, longitude, apiKey)
 
-            val cityId = response.city?.id ?: 0
             val cityName = response.city?.name
-            val lat = response.city?.coord?.lat
-            val lon = response.city?.coord?.lon
 
             val entities =
                 response.list?.map { item ->
                     ForecastEntity(
-                        id = 0,
-                        cityId = cityId,
+                        id = 0, // Auto-generated
                         cityName = cityName,
-                        latitude = lat,
-                        longitude = lon,
+                        latitude = latitude,
+                        longitude = longitude,
                         timestamp = item.dt,
                         temperature = item.main?.temp,
+                        weatherMain = item.weather?.firstOrNull()?.main,
                         weatherDescription = item.weather?.firstOrNull()?.description,
                         weatherIcon = item.weather?.firstOrNull()?.icon,
                         dateText = item.dtTxt,
                     )
                 } ?: emptyList()
 
-            forecastDao.deleteForecastByCity(cityId)
+            forecastDao.deleteAll()
             forecastDao.insertForecast(entities)
         } catch (e: Exception) {
             Log.e(TAG, "Error fetching forecast: ${e.message}")
@@ -93,8 +92,8 @@ class WeatherRepositoryImpl(
         return currentWeatherDao.getCurrentWeather(cityId)
     }
 
-    override fun getForecastFromDb(cityId: Int): Flow<List<ForecastEntity>> {
-        return forecastDao.getForecast(cityId)
+    override fun getForecastFromDb(): Flow<List<ForecastEntity>> {
+        return forecastDao.getForecast()
     }
 
     override suspend fun clearAllWeatherData() {
@@ -104,9 +103,5 @@ class WeatherRepositoryImpl(
 
     override suspend fun clearCurrentWeather() {
         currentWeatherDao.deleteAll()
-    }
-
-    override suspend fun clearForecastData(cityId: Int) {
-        forecastDao.deleteForecastByCity(cityId)
     }
 }

@@ -16,17 +16,16 @@ interface WeatherRepository {
         latitude: Double,
         longitude: Double,
         apiKey: String,
+        count: Int,
     )
 
     // Local data sources
     fun getCurrentWeatherFromDb(cityId: Int): Flow<CurrentWeatherEntity?>
 
-    fun getForecastFromDb(cityId: Int): Flow<List<ForecastEntity>>
+    fun getForecastFromDb(): Flow<List<ForecastEntity>>
 
     // Clear cache
     suspend fun clearAllWeatherData()
 
     suspend fun clearCurrentWeather()
-
-    suspend fun clearForecastData(cityId: Int)
 }

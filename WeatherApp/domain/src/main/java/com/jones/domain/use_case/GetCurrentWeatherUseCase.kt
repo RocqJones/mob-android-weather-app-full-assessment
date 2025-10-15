@@ -12,12 +12,12 @@ class GetCurrentWeatherUseCase(
     private val repository: WeatherRepository,
 ) {
     suspend operator fun invoke(
-        cityId: Int,
         latitude: Double,
         longitude: Double,
         apiKey: String,
     ): Flow<CurrentWeatherEntity?> {
         repository.fetchCurrentWeather(latitude, longitude, apiKey)
-        return repository.getCurrentWeatherFromDb(cityId)
+
+        return repository.getCurrentWeatherFromDb(0)
     }
 }
