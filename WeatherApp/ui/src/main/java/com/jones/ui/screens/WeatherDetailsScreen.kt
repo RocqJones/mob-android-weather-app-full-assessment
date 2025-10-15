@@ -1,5 +1,6 @@
 package com.jones.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -19,6 +22,7 @@ import com.jones.ui.components.CurrentWeatherCard
 import com.jones.ui.components.ForecastCard
 import com.jones.ui.components.OnlineStatusMessage
 import com.jones.ui.state.WeatherUiState
+import com.jones.ui.util.getWeatherBackground
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +57,20 @@ fun WeatherDetailsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Add background image based on weather condition
+            val weatherMain = when (uiState) {
+                is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
+                is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
+                else -> null
+            }
+
+            Image(
+                painter = painterResource(id = getWeatherBackground(weatherMain)),
+                contentDescription = "Weather Background",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
             when (uiState) {
                 is WeatherUiState.Loading -> {
                     CircularProgressIndicator(
@@ -291,4 +309,3 @@ private fun formatFullTimestamp(timestamp: Long): String {
     val sdf = SimpleDateFormat("EEEE, MMM dd, yyyy 'at' HH:mm:ss", Locale.getDefault())
     return sdf.format(Date(timestamp * 1000))
 }
-

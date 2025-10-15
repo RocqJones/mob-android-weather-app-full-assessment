@@ -1,5 +1,6 @@
 package com.jones.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,6 +8,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -14,6 +17,7 @@ import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.ui.components.*
 import com.jones.ui.state.WeatherUiState
+import com.jones.ui.util.getWeatherBackground
 
 @Composable
 fun HomeScreen(
@@ -27,6 +31,20 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Add background image based on weather condition
+            val weatherMain = when (uiState) {
+                is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
+                is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
+                else -> null
+            }
+
+            Image(
+                painter = painterResource(id = getWeatherBackground(weatherMain)),
+                contentDescription = "Weather Background",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
             when (uiState) {
                 is WeatherUiState.Loading -> {
                     CircularProgressIndicator(
@@ -129,3 +147,4 @@ fun WeatherContent(
         }
     }
 }
+
