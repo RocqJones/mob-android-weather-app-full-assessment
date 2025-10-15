@@ -47,6 +47,8 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":ui"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,6 +1,7 @@
 package com.jones.weatherapp
 
 import android.app.Application
+import com.jones.core.constants.Constants
 import com.jones.di.appModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -10,6 +11,9 @@ import org.koin.core.logger.Level
 class WeatherApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        // Init API key
+        Constants.API_KEY = BuildConfig.WEATHER_API_KEY
 
         startKoin {
             androidLogger(Level.DEBUG)

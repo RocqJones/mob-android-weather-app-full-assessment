@@ -9,7 +9,11 @@ This project uses modularization and MVVM architecture for scalability and maint
 - **app**: Entry point, navigation, initialization, Koin setup.
 - **core**: Shared utilities, constants, base classes, network connectivity service.
 - **di**: Dependency injection modules (Koin configuration for Retrofit, Room, Repositories).
-- **ui**: Screens, ViewModels, themes (MVVM presentation layer).
+- **ui**: Modular presentation layer with MVVM architecture
+  - `screens/`: Screen-level composables
+  - `components/`: Reusable UI components
+  - `viewmodel/`: ViewModels for state management
+  - `state/`: UI state classes
 - **domain**: Business logic, use cases, domain models.
 - **data**: Repositories, data sources, API (Retrofit), offline support (Room DB), sync service.
 
@@ -37,6 +41,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 **UI Framework:**
 - Jetpack Compose - Modern declarative UI
 - Material3 - Material Design components
+- Navigation Compose - Screen navigation
 
 ### API Integration
 
