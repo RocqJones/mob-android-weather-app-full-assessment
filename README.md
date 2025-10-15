@@ -7,11 +7,11 @@ This project uses modularization and MVVM architecture for scalability and maint
 **Modules:**
 
 - **app**: Entry point, navigation, initialization, Koin setup.
-- **core**: Shared utilities, constants, base classes.
+- **core**: Shared utilities, constants, base classes, network connectivity service.
 - **di**: Dependency injection modules (Koin configuration for Retrofit, Room, Repositories).
 - **ui**: Screens, ViewModels, themes (MVVM presentation layer).
 - **domain**: Business logic, use cases, domain models.
-- **data**: Repositories, data sources, API (Retrofit), offline support (Room DB).
+- **data**: Repositories, data sources, API (Retrofit), offline support (Room DB), sync service.
 
 ### Tech Stack
 
@@ -22,7 +22,6 @@ This project uses modularization and MVVM architecture for scalability and maint
 
 **Local Database:**
 - Room - Offline data persistence
-- SQLite - Local storage
 
 **Dependency Injection:**
 - Koin - Lightweight DI framework
@@ -46,11 +45,27 @@ This project uses modularization and MVVM architecture for scalability and maint
 - 5-Day Forecast: `/data/2.5/forecast`
 - API Key: Securely stored in `local.properties`
 
-### Data Flow
+### Offline-First Architecture
 
-1. **Remote → Local**: API data fetched via Retrofit, mapped to DTOs, converted to Room entities, and cached locally
-2. **Local → UI**: Room database emits Flow, observed by ViewModels, and rendered in Compose UI
-3. **Offline-First**: App displays cached data when offline, refreshes when online
+The app implements a robust offline-first strategy:
+
+**Data Flow:**
+1. **UI Request** → ViewModel calls Use Case
+2. **Immediate Response** → Cached data from Room DB displayed instantly
+3. **Background Sync** → API refresh triggered if network available
+4. **Auto-Update** → Flow emits new data, UI updates automatically
+
+**Network Monitoring:**
+- `NetworkConnectivityService` monitors real-time network status
+- `WeatherSyncService` triggers automatic sync when internet becomes available
+- Repository checks network before API calls, gracefully handles offline scenarios
+
+**Benefits:**
+- ✅ Instant UI updates from local cache
+- ✅ Works seamlessly offline
+- ✅ Automatic data refresh when online
+- ✅ No crashes due to network failures
+- ✅ Smooth user experience regardless of connectivity
 
 ### Module Dependencies
 
@@ -58,14 +73,14 @@ This project uses modularization and MVVM architecture for scalability and maint
 app
  ├─ data
  ├─ domain
- ├─ di → data
+ ├─ di → core, data
  ├─ ui
  └─ core
 
-data
+data → core
  ├─ Retrofit (API)
  ├─ Room (Database)
- └─ Koin (DI)
+ └─ Network Service
 ```
 
 ### Key Features
@@ -73,11 +88,13 @@ data
 ✅ Modular architecture for scalability  
 ✅ MVVM pattern with clear separation of concerns  
 ✅ Offline-first with Room database caching  
+✅ Real-time network monitoring and auto-sync  
 ✅ Reactive UI with Kotlin Flow  
 ✅ Dependency injection with Koin  
 ✅ RESTful API integration with Retrofit  
 ✅ Null-safe data models  
 ✅ Code quality enforcement with KtLint  
+✅ Error handling with Result sealed class  
 
 ### Security
 

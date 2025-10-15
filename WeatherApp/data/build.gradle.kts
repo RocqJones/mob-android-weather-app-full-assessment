@@ -37,6 +37,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    // Core module
+    implementation(project(":core"))
+
     // Retrofit - exposed to dependent modules
     api(libs.retrofit)
     api(libs.retrofit.gson)

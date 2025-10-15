@@ -41,7 +41,11 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
 
+    // Coroutines
+    implementation(libs.coroutines.android)
+
     // Modules
+    implementation(project(":core"))
     implementation(project(":data"))
 
     testImplementation(libs.junit)

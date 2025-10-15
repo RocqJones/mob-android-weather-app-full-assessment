@@ -5,6 +5,7 @@ package com.jones.di
  */
 val appModules =
     listOf(
+        coreModule,
         networkModule,
         databaseModule,
         repositoryModule,

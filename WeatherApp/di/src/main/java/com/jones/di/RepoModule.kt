@@ -14,6 +14,7 @@ val repositoryModule =
                 apiService = get(),
                 currentWeatherDao = get(),
                 forecastDao = get(),
+                networkConnectivityService = get(),
             )
         }
     }
