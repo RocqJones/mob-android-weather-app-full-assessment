@@ -6,6 +6,8 @@ import com.jones.data.local.dao.ForecastDao
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.data.remote.api.WeatherApiService
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.model.Forecast
 import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -64,13 +66,26 @@ class WeatherRepositoryImplTest {
                     timestamp = 1697529600L,
                 )
 
+            val expectedDomainModel =
+                CurrentWeather(
+                    id = cityId,
+                    cityName = "Nairobi",
+                    latitude = -1.2921,
+                    longitude = 36.8219,
+                    temperature = 298.15,
+                    weatherMain = "Clear",
+                    weatherDescription = "clear sky",
+                    weatherIcon = "01d",
+                    timestamp = 1697529600L,
+                )
+
             every { currentWeatherDao.getCurrentWeather(cityId) } returns flowOf(entity)
 
             // When
             val result = repository.getCurrentWeatherFromDb(cityId).first()
 
             // Then
-            assertEquals(entity, result)
+            assertEquals(expectedDomainModel, result)
             verify { currentWeatherDao.getCurrentWeather(cityId) }
         }
 
@@ -108,13 +123,25 @@ class WeatherRepositoryImplTest {
                     ),
                 )
 
+            val expectedDomainModels =
+                listOf(
+                    Forecast(
+                        id = 1,
+                        dateText = "2025-10-17 12:00:00",
+                        temperature = 298.15,
+                        weatherMain = "Clear",
+                        weatherDescription = "clear sky",
+                        weatherIcon = "01d",
+                    ),
+                )
+
             every { forecastDao.getForecast() } returns flowOf(entities)
 
             // When
             val result = repository.getForecastFromDb().first()
 
             // Then
-            assertEquals(entities, result)
+            assertEquals(expectedDomainModels, result)
             verify { forecastDao.getForecast() }
         }
 
