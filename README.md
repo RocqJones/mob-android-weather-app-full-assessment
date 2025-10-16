@@ -234,10 +234,7 @@ The project includes comprehensive unit test coverage across all layers:
 
 ## Recording & screenshots
 - **Recording:** [Demo Video](screenshots_recording/weather_app_demo.mp4)
-
-<p align="start">
-    <video src="[https://github.com/Dynamic-Visual-Technologies-PTY-LTD/mob-android-weather-app-full-assessment-starter-project-defed850-18a3-41f5-8e78-d077d715e2ec/blob/main/screenshots_recording/weather_app_demo.mp4]" width="300" controls></video>
-</p>
+[![Watch Demo on YouTube](https://img.youtube.com/vi/59qa-hhL-20/0.jpg)](https://youtube.com/shorts/59qa-hhL-20?feature=share)
 
 - **Screenshots:**
 
