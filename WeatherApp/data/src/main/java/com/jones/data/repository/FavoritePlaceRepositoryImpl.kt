@@ -8,9 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class FavoritePlaceRepositoryImpl(
-    private val favoritePlaceDao: FavoritePlaceDao
+    private val favoritePlaceDao: FavoritePlaceDao,
 ) : FavoritePlaceRepository {
-
     override fun getAllFavoritePlaces(): Flow<List<FavoritePlace>> {
         return favoritePlaceDao.getAllFavoritePlaces().map { entities ->
             entities.map { it.toDomain() }
@@ -39,7 +38,7 @@ class FavoritePlaceRepositoryImpl(
             name = name,
             latitude = latitude,
             longitude = longitude,
-            addedAt = addedAt
+            addedAt = addedAt,
         )
     }
 
@@ -49,8 +48,7 @@ class FavoritePlaceRepositoryImpl(
             name = name,
             latitude = latitude,
             longitude = longitude,
-            addedAt = addedAt
+            addedAt = addedAt,
         )
     }
 }
-

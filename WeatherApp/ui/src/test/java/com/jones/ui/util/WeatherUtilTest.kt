@@ -8,7 +8,6 @@ import org.junit.Test
  * Unit tests for weather utility functions
  */
 class WeatherUtilTest {
-
     @Test
     fun `getWeatherBackground returns correct background for Clear weather`() {
         // Given & When

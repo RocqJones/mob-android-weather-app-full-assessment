@@ -5,14 +5,17 @@ import com.jones.domain.model.Forecast
 
 sealed class WeatherUiState {
     object Loading : WeatherUiState()
+
     data class Success(
         val currentWeather: CurrentWeather?,
         val forecast: List<Forecast>?,
-        val isOnline: Boolean
+        val isOnline: Boolean,
     ) : WeatherUiState()
+
     data class Error(val message: String, val isOnline: Boolean) : WeatherUiState()
+
     data class Offline(
         val currentWeather: CurrentWeather?,
-        val forecast: List<Forecast>?
+        val forecast: List<Forecast>?,
     ) : WeatherUiState()
 }

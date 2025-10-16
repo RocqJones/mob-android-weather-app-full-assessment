@@ -9,18 +9,18 @@ import org.junit.Test
  * Unit tests for FavoritePlace domain model
  */
 class FavoritePlaceTest {
-
     @Test
     fun `FavoritePlace creates instance with all fields`() {
         // Given & When
         val timestamp = System.currentTimeMillis()
-        val place = FavoritePlace(
-            id = 1,
-            name = "Nairobi, Kenya",
-            latitude = -1.286389,
-            longitude = 36.817223,
-            addedAt = timestamp
-        )
+        val place =
+            FavoritePlace(
+                id = 1,
+                name = "Nairobi, Kenya",
+                latitude = -1.286389,
+                longitude = 36.817223,
+                addedAt = timestamp,
+            )
 
         // Then
         assertEquals(1, place.id)
@@ -34,11 +34,12 @@ class FavoritePlaceTest {
     fun `FavoritePlace with default values`() {
         // Given & When
         val before = System.currentTimeMillis()
-        val place = FavoritePlace(
-            name = "London, UK",
-            latitude = 51.5074,
-            longitude = -0.1278
-        )
+        val place =
+            FavoritePlace(
+                name = "London, UK",
+                latitude = 51.5074,
+                longitude = -0.1278,
+            )
         val after = System.currentTimeMillis()
 
         // Then
@@ -51,21 +52,23 @@ class FavoritePlaceTest {
     fun `FavoritePlace equality works correctly`() {
         // Given
         val timestamp = 1697529600L
-        val place1 = FavoritePlace(
-            id = 1,
-            name = "Tokyo, Japan",
-            latitude = 35.6762,
-            longitude = 139.6503,
-            addedAt = timestamp
-        )
+        val place1 =
+            FavoritePlace(
+                id = 1,
+                name = "Tokyo, Japan",
+                latitude = 35.6762,
+                longitude = 139.6503,
+                addedAt = timestamp,
+            )
 
-        val place2 = FavoritePlace(
-            id = 1,
-            name = "Tokyo, Japan",
-            latitude = 35.6762,
-            longitude = 139.6503,
-            addedAt = timestamp
-        )
+        val place2 =
+            FavoritePlace(
+                id = 1,
+                name = "Tokyo, Japan",
+                latitude = 35.6762,
+                longitude = 139.6503,
+                addedAt = timestamp,
+            )
 
         // Then
         assertEquals(place1, place2)
@@ -75,19 +78,21 @@ class FavoritePlaceTest {
     @Test
     fun `FavoritePlace with different values are not equal`() {
         // Given
-        val place1 = FavoritePlace(
-            id = 1,
-            name = "Paris, France",
-            latitude = 48.8566,
-            longitude = 2.3522
-        )
+        val place1 =
+            FavoritePlace(
+                id = 1,
+                name = "Paris, France",
+                latitude = 48.8566,
+                longitude = 2.3522,
+            )
 
-        val place2 = FavoritePlace(
-            id = 2,
-            name = "Berlin, Germany",
-            latitude = 52.5200,
-            longitude = 13.4050
-        )
+        val place2 =
+            FavoritePlace(
+                id = 2,
+                name = "Berlin, Germany",
+                latitude = 52.5200,
+                longitude = 13.4050,
+            )
 
         // Then
         assertNotEquals(place1, place2)
@@ -96,13 +101,14 @@ class FavoritePlaceTest {
     @Test
     fun `FavoritePlace copy works correctly`() {
         // Given
-        val original = FavoritePlace(
-            id = 1,
-            name = "New York, USA",
-            latitude = 40.7128,
-            longitude = -74.0060,
-            addedAt = 1697529600L
-        )
+        val original =
+            FavoritePlace(
+                id = 1,
+                name = "New York, USA",
+                latitude = 40.7128,
+                longitude = -74.0060,
+                addedAt = 1697529600L,
+            )
 
         // When
         val copy = original.copy(name = "Brooklyn, USA")
@@ -118,12 +124,13 @@ class FavoritePlaceTest {
     @Test
     fun `FavoritePlace handles various coordinate formats`() {
         // Given & When
-        val places = listOf(
-            FavoritePlace(id = 1, name = "Sydney", latitude = -33.8688, longitude = 151.2093),
-            FavoritePlace(id = 2, name = "Moscow", latitude = 55.7558, longitude = 37.6173),
-            FavoritePlace(id = 3, name = "São Paulo", latitude = -23.5505, longitude = -46.6333),
-            FavoritePlace(id = 4, name = "Cairo", latitude = 30.0444, longitude = 31.2357)
-        )
+        val places =
+            listOf(
+                FavoritePlace(id = 1, name = "Sydney", latitude = -33.8688, longitude = 151.2093),
+                FavoritePlace(id = 2, name = "Moscow", latitude = 55.7558, longitude = 37.6173),
+                FavoritePlace(id = 3, name = "São Paulo", latitude = -23.5505, longitude = -46.6333),
+                FavoritePlace(id = 4, name = "Cairo", latitude = 30.0444, longitude = 31.2357),
+            )
 
         // Then
         assertEquals(4, places.size)
@@ -136,19 +143,21 @@ class FavoritePlaceTest {
     @Test
     fun `FavoritePlace handles places with same coordinates but different names`() {
         // Given
-        val place1 = FavoritePlace(
-            id = 1,
-            name = "Location A",
-            latitude = 10.0,
-            longitude = 20.0
-        )
+        val place1 =
+            FavoritePlace(
+                id = 1,
+                name = "Location A",
+                latitude = 10.0,
+                longitude = 20.0,
+            )
 
-        val place2 = FavoritePlace(
-            id = 2,
-            name = "Location B",
-            latitude = 10.0,
-            longitude = 20.0
-        )
+        val place2 =
+            FavoritePlace(
+                id = 2,
+                name = "Location B",
+                latitude = 10.0,
+                longitude = 20.0,
+            )
 
         // Then
         assertNotEquals(place1, place2) // Different IDs make them different
@@ -167,4 +176,3 @@ class FavoritePlaceTest {
         assertTrue(place2.addedAt >= place1.addedAt)
     }
 }
-

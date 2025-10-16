@@ -22,7 +22,7 @@ val repositoryModule =
 
         single<FavoritePlaceRepository> {
             FavoritePlaceRepositoryImpl(
-                favoritePlaceDao = get()
+                favoritePlaceDao = get(),
             )
         }
     }

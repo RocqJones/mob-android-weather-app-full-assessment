@@ -30,47 +30,48 @@ import java.util.Locale
 @Composable
 fun CurrentWeatherCard(
     weather: CurrentWeather,
-    navController: NavController? = null
+    navController: NavController? = null,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
             navController?.navigate("weather_details")
-        }
+        },
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 TextBold(
                     text = weather.cityName ?: stringResource(R.string.unknown_location),
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
                 Icon(
                     painter = painterResource(id = getWeatherIcon(weather.weatherMain)),
                     contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier.size(48.dp),
-                    tint = Color.Unspecified
+                    tint = Color.Unspecified,
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
 
             TextBold(
                 text = "${weather.temperature?.let { kelvinToCelsius(it) } ?: "--"}°C",
-                style = MaterialTheme.typography.displayLarge
+                style = MaterialTheme.typography.displayLarge,
             )
 
             TextRegular(
-                text = weather.weatherDescription?.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                } ?: stringResource(R.string.no_description),
-                style = MaterialTheme.typography.bodyMedium
+                text =
+                    weather.weatherDescription?.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                    } ?: stringResource(R.string.no_description),
+                style = MaterialTheme.typography.bodyMedium,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -79,7 +80,7 @@ fun CurrentWeatherCard(
                 TextRegular(
                     text = "Last Updated: ${formatFullTimestamp(it)}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

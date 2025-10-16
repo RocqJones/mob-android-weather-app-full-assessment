@@ -56,7 +56,7 @@ import java.util.Locale
 fun WeatherDetailsScreen(
     navController: NavController,
     uiState: WeatherUiState,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -66,61 +66,64 @@ fun WeatherDetailsScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             // Add background image based on weather condition
-            val weatherMain = when (uiState) {
-                is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
-                is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
-                else -> null
-            }
+            val weatherMain =
+                when (uiState) {
+                    is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
+                    is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
+                    else -> null
+                }
 
             Image(
                 painter = painterResource(id = getWeatherBackground(weatherMain)),
                 contentDescription = "Weather Background",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             when (uiState) {
                 is WeatherUiState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
                 is WeatherUiState.Success -> {
                     WeatherDetailsContent(
                         currentWeather = uiState.currentWeather,
                         forecast = uiState.forecast,
-                        isOnline = uiState.isOnline
+                        isOnline = uiState.isOnline,
                     )
                 }
                 is WeatherUiState.Error -> {
                     ErrorContent(
                         message = uiState.message,
                         onRetry = onRetry,
-                        isOnline = uiState.isOnline
+                        isOnline = uiState.isOnline,
                     )
                 }
                 is WeatherUiState.Offline -> {
                     WeatherDetailsContent(
                         currentWeather = uiState.currentWeather,
                         forecast = uiState.forecast,
-                        isOnline = false
+                        isOnline = false,
                     )
                 }
             }
@@ -132,11 +135,11 @@ fun WeatherDetailsScreen(
 private fun WeatherDetailsContent(
     currentWeather: CurrentWeather?,
     forecast: List<Forecast>?,
-    isOnline: Boolean
+    isOnline: Boolean,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         if (!isOnline) {
             item {
@@ -152,7 +155,7 @@ private fun WeatherDetailsContent(
             } ?: run {
                 TextRegular(
                     text = stringResource(R.string.no_current_weather_data_available),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -162,7 +165,7 @@ private fun WeatherDetailsContent(
             TextBold(
                 text = "Extended Forecast",
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
             )
         }
 
@@ -171,7 +174,7 @@ private fun WeatherDetailsContent(
                 item {
                     TextRegular(
                         text = stringResource(R.string.no_forecast_data_available),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }
@@ -189,15 +192,15 @@ private fun WeatherDetailsContent(
 private fun WeatherDetailsCard(weather: CurrentWeather) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             TextBold(
                 text = stringResource(R.string.additional_information),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = 12.dp),
             )
 
             DetailRow(label = stringResource(R.string.city), value = weather.cityName ?: "Unknown")
@@ -206,7 +209,7 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
                 weather.longitude?.let { lon ->
                     DetailRow(
                         label = stringResource(R.string.coordinates),
-                        value = "${"%.4f".format(lat)}, ${"%.4f".format(lon)}"
+                        value = "${"%.4f".format(lat)}, ${"%.4f".format(lon)}",
                     )
                 }
             }
@@ -214,16 +217,17 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
             weather.temperature?.let {
                 DetailRow(
                     label = stringResource(R.string.temperature),
-                    value = "${kelvinToCelsius(it)}°C (${kelvinToFahrenheit(it)}°F)"
+                    value = "${kelvinToCelsius(it)}°C (${kelvinToFahrenheit(it)}°F)",
                 )
             }
 
             weather.weatherDescription?.let {
                 DetailRow(
                     label = stringResource(R.string.condition),
-                    value = it.replaceFirstChar { char ->
-                        if (char.isLowerCase()) char.titlecase(Locale.getDefault()) else char.toString()
-                    }
+                    value =
+                        it.replaceFirstChar { char ->
+                            if (char.isLowerCase()) char.titlecase(Locale.getDefault()) else char.toString()
+                        },
                 )
             }
 
@@ -234,7 +238,7 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
             weather.timestamp?.let {
                 DetailRow(
                     label = stringResource(R.string.last_updated),
-                    value = formatFullTimestamp(it)
+                    value = formatFullTimestamp(it),
                 )
             }
         }
@@ -242,23 +246,27 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
 }
 
 @Composable
-private fun DetailRow(label: String, value: String) {
+private fun DetailRow(
+    label: String,
+    value: String,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         TextRegular(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         TextMedium(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }
@@ -267,27 +275,29 @@ private fun DetailRow(label: String, value: String) {
 private fun ErrorContent(
     message: String,
     onRetry: () -> Unit,
-    isOnline: Boolean
+    isOnline: Boolean,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         if (!isOnline) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer
-                )
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                    ),
             ) {
                 TextMedium(
                     text = stringResource(R.string.no_internet_connection),
                     modifier = Modifier.padding(16.dp),
                     color = MaterialTheme.colorScheme.onErrorContainer,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -297,7 +307,7 @@ private fun ErrorContent(
             imageVector = Icons.Default.Warning,
             contentDescription = stringResource(R.string.error),
             tint = MaterialTheme.colorScheme.error,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(64.dp),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -305,7 +315,7 @@ private fun ErrorContent(
         TextBold(
             text = stringResource(R.string.something_went_wrong),
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.error
+            color = MaterialTheme.colorScheme.error,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -313,7 +323,7 @@ private fun ErrorContent(
         TextRegular(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.height(24.dp))

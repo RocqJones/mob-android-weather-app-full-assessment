@@ -5,6 +5,5 @@ package com.jones.core.location
  */
 data class Coordinates(
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
 )
-

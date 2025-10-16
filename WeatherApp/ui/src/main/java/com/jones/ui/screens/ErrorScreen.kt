@@ -7,10 +7,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jones.ui.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.jones.ui.R
 import com.jones.ui.components.TextBold
 import com.jones.ui.components.TextMedium
 import com.jones.ui.components.TextRegular
@@ -19,28 +19,30 @@ import com.jones.ui.components.TextRegular
 fun ErrorScreen(
     message: String,
     onRetry: () -> Unit,
-    isOnline: Boolean
+    isOnline: Boolean,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         if (!isOnline) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer
-                )
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                    ),
             ) {
                 TextMedium(
                     text = stringResource(R.string.no_internet_connection),
                     modifier = Modifier.padding(16.dp),
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +52,7 @@ fun ErrorScreen(
             imageVector = Icons.Default.Warning,
             contentDescription = stringResource(R.string.error),
             tint = MaterialTheme.colorScheme.error,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(64.dp),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -58,7 +60,7 @@ fun ErrorScreen(
         TextBold(
             text = stringResource(R.string.something_went_wrong),
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.error
+            color = MaterialTheme.colorScheme.error,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -67,7 +69,7 @@ fun ErrorScreen(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.height(24.dp))

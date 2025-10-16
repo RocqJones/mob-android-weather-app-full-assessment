@@ -125,7 +125,7 @@ class WeatherRepositoryImpl(
             weatherMain = weatherMain,
             weatherDescription = weatherDescription,
             weatherIcon = weatherIcon,
-            timestamp = timestamp
+            timestamp = timestamp,
         )
     }
 
@@ -136,7 +136,7 @@ class WeatherRepositoryImpl(
             temperature = temperature,
             weatherMain = weatherMain,
             weatherDescription = weatherDescription,
-            weatherIcon = weatherIcon
+            weatherIcon = weatherIcon,
         )
     }
 }

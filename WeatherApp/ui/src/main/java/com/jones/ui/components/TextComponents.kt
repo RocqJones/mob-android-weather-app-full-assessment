@@ -31,7 +31,7 @@ fun TextBold(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current,
-    textDecoration: TextDecoration? = null
+    textDecoration: TextDecoration? = null,
 ) {
     Text(
         text = text,
@@ -48,7 +48,7 @@ fun TextBold(
         minLines = minLines,
         onTextLayout = onTextLayout,
         style = style,
-        textDecoration = textDecoration
+        textDecoration = textDecoration,
     )
 }
 
@@ -69,7 +69,7 @@ fun TextMedium(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current,
-    textDecoration: TextDecoration? = null
+    textDecoration: TextDecoration? = null,
 ) {
     Text(
         text = text,
@@ -86,7 +86,7 @@ fun TextMedium(
         minLines = minLines,
         onTextLayout = onTextLayout,
         style = style,
-        textDecoration = textDecoration
+        textDecoration = textDecoration,
     )
 }
 
@@ -107,7 +107,7 @@ fun TextRegular(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current,
-    textDecoration: TextDecoration? = null
+    textDecoration: TextDecoration? = null,
 ) {
     Text(
         text = text,
@@ -124,6 +124,6 @@ fun TextRegular(
         minLines = minLines,
         onTextLayout = onTextLayout,
         style = style,
-        textDecoration = textDecoration
+        textDecoration = textDecoration,
     )
 }

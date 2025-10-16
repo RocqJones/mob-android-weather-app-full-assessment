@@ -6,6 +6,5 @@ data class Forecast(
     val temperature: Double?,
     val weatherMain: String?,
     val weatherDescription: String?,
-    val weatherIcon: String?
+    val weatherIcon: String?,
 )
-

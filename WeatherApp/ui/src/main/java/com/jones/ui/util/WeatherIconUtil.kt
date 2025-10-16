@@ -14,4 +14,3 @@ fun getWeatherIcon(weatherMain: String?): Int {
         WeatherType.SNOW -> R.mipmap.heavy_snowfall
     }
 }
-

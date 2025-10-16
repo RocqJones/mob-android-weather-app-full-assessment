@@ -14,18 +14,20 @@ import com.jones.ui.R
 @Composable
 fun OfflineMessage() {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer
-        )
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+            ),
     ) {
         TextMedium(
             text = stringResource(R.string.you_are_offline_showing_cached_data),
             modifier = Modifier.padding(16.dp),
             color = MaterialTheme.colorScheme.onErrorContainer,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }

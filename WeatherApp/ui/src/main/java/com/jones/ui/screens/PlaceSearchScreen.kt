@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 fun PlaceSearchScreen(
     navController: NavController,
     onPlaceSelected: (String, Double, Double) -> Unit,
-    favoritesViewModel: FavoritesViewModel = koinViewModel()
+    favoritesViewModel: FavoritesViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
     val tag = "PlaceSearchScreen"
@@ -46,7 +46,7 @@ fun PlaceSearchScreen(
             try {
                 Places.initialize(
                     context.applicationContext,
-                    Constants.PLACES_API_KEY
+                    Constants.PLACES_API_KEY,
                 )
             } catch (e: Exception) {
                 Log.e(tag, context.getString(R.string.places_api_initialization_failed), e)
@@ -54,74 +54,77 @@ fun PlaceSearchScreen(
         }
     }
 
-    val intentLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        try {
-            when (result.resultCode) {
-                Activity.RESULT_OK -> {
-                    result.data?.let { data ->
-                        val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.i(tag, "Place: ${place.name}, ${place.latLng}, ${place.id}")
+    val intentLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            try {
+                when (result.resultCode) {
+                    Activity.RESULT_OK -> {
+                        result.data?.let { data ->
+                            val place = Autocomplete.getPlaceFromIntent(data)
+                            Log.i(tag, "Place: ${place.name}, ${place.latLng}, ${place.id}")
 
-                        place.latLng?.let { latLng ->
-                            val placeName = place.name ?: context.getString(R.string.unknown_place)
+                            place.latLng?.let { latLng ->
+                                val placeName = place.name ?: context.getString(R.string.unknown_place)
 
-                            // Add to favorites
-                            favoritesViewModel.addFavoritePlace(
-                                name = placeName,
-                                latitude = latLng.latitude,
-                                longitude = latLng.longitude
-                            )
+                                // Add to favorites
+                                favoritesViewModel.addFavoritePlace(
+                                    name = placeName,
+                                    latitude = latLng.latitude,
+                                    longitude = latLng.longitude,
+                                )
 
-                            // Update weather for selected location
-                            onPlaceSelected(placeName, latLng.latitude, latLng.longitude)
+                                // Update weather for selected location
+                                onPlaceSelected(placeName, latLng.latitude, latLng.longitude)
 
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.added_successfully, placeName),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.added_successfully, placeName),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
 
-                            navController.navigateUp()
+                                navController.navigateUp()
+                            }
                         }
                     }
-                }
 
-                AutocompleteActivity.RESULT_ERROR -> {
-                    result.data?.let { data ->
-                        val status = Autocomplete.getStatusFromIntent(data)
-                        Log.e(tag, "Place Error status: ${status.statusMessage}")
-                        Toast.makeText(
-                            context,
-                            "Error: ${status.statusMessage}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    AutocompleteActivity.RESULT_ERROR -> {
+                        result.data?.let { data ->
+                            val status = Autocomplete.getStatusFromIntent(data)
+                            Log.e(tag, "Place Error status: ${status.statusMessage}")
+                            Toast.makeText(
+                                context,
+                                "Error: ${status.statusMessage}",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+
+                    Activity.RESULT_CANCELED -> {
+                        Log.i(tag, context.getString(R.string.user_cancelled_place_selection))
                     }
                 }
-
-                Activity.RESULT_CANCELED -> {
-                    Log.i(tag, context.getString(R.string.user_cancelled_place_selection))
-                }
+            } catch (e: Exception) {
+                Log.e(tag, "intentLauncher Error", e)
+                Toast.makeText(context, "Error selecting place", Toast.LENGTH_SHORT).show()
             }
-        } catch (e: Exception) {
-            Log.e(tag, "intentLauncher Error", e)
-            Toast.makeText(context, "Error selecting place", Toast.LENGTH_SHORT).show()
         }
-    }
 
     val launchMapInputOverlay = {
-        val fields = listOf(
-            Place.Field.ID,
-            Place.Field.NAME,
-            Place.Field.LAT_LNG
-        )
+        val fields =
+            listOf(
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.LAT_LNG,
+            )
 
         // Show Google Places Autocomplete Dialog
-        val intent = Autocomplete.IntentBuilder(
-            AutocompleteActivityMode.OVERLAY,
-            fields
-        ).build(context)
+        val intent =
+            Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY,
+                fields,
+            ).build(context)
         intentLauncher.launch(intent)
     }
 
@@ -133,37 +136,39 @@ fun PlaceSearchScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(32.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
                 modifier = Modifier.size(80.dp),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             TextBold(
                 text = stringResource(R.string.find_a_location),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -171,21 +176,22 @@ fun PlaceSearchScreen(
             TextRegular(
                 text = stringResource(R.string.search_for_cities_worldwide_to_add_to_your_favorites),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
                 onClick = { launchMapInputOverlay() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
             ) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 TextMedium(stringResource(R.string.search_for_a_place))
@@ -196,7 +202,7 @@ fun PlaceSearchScreen(
             TextRegular(
                 text = "Powered by Google Places",
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

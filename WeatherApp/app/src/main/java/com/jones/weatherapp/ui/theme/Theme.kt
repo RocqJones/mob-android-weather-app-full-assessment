@@ -38,15 +38,16 @@ fun WeatherAppTheme(
         when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 val context = LocalContext.current
-                val baseScheme = if (darkTheme) {
-                    dynamicDarkColorScheme(context)
-                } else {
-                    dynamicLightColorScheme(context)
-                }
+                val baseScheme =
+                    if (darkTheme) {
+                        dynamicDarkColorScheme(context)
+                    } else {
+                        dynamicLightColorScheme(context)
+                    }
 
                 baseScheme.copy(
                     primaryContainer = if (darkTheme) DarkGrey else LightGrey,
-                    onPrimaryContainer = if (darkTheme) OnDarkGrey else OnLightGrey
+                    onPrimaryContainer = if (darkTheme) OnDarkGrey else OnLightGrey,
                 )
             }
 

@@ -21,14 +21,15 @@ import org.koin.androidx.compose.koinViewModel
 fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
     val navController = rememberNavController()
 
-    val locationState = rememberLocationState { coordinates ->
-        weatherViewModel.updateLocation(coordinates)
-    }
+    val locationState =
+        rememberLocationState { coordinates ->
+            weatherViewModel.updateLocation(coordinates)
+        }
 
     NavHost(
         navController = navController,
         startDestination = Screen.WeatherHome.route,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         composable(Screen.WeatherHome.route) {
             val uiState by weatherViewModel.uiState.collectAsState()
@@ -55,7 +56,7 @@ fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
                 navController = navController,
                 onPlaceSelected = { latitude, longitude ->
                     weatherViewModel.updateLocation(Coordinates(latitude, longitude))
-                }
+                },
             )
         }
 
@@ -64,7 +65,7 @@ fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
                 navController = navController,
                 onPlaceSelected = { name, latitude, longitude ->
                     weatherViewModel.updateLocation(Coordinates(latitude, longitude))
-                }
+                },
             )
         }
     }

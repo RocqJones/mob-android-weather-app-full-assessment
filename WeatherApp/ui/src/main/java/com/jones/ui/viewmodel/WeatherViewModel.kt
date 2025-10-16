@@ -19,9 +19,8 @@ class WeatherViewModel(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getForecastUseCase: GetForecastUseCase,
     private val weatherSyncService: WeatherSyncService,
-    private val networkConnectivityService: NetworkConnectivityService
+    private val networkConnectivityService: NetworkConnectivityService,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<WeatherUiState>(WeatherUiState.Loading)
     val uiState: StateFlow<WeatherUiState> = _uiState
 
@@ -29,7 +28,6 @@ class WeatherViewModel(
     private val cnt = Constants.DEFAULT_COUNT
 
     private val apiKey = Constants.API_KEY
-
 
     init {
         startNetworkMonitoring()
@@ -50,10 +48,11 @@ class WeatherViewModel(
                 val currentState = _uiState.value
                 when {
                     currentState is WeatherUiState.Success && !isOnline -> {
-                        _uiState.value = WeatherUiState.Offline(
-                            currentWeather = currentState.currentWeather,
-                            forecast = currentState.forecast
-                        )
+                        _uiState.value =
+                            WeatherUiState.Offline(
+                                currentWeather = currentState.currentWeather,
+                                forecast = currentState.forecast,
+                            )
                     }
                     currentState is WeatherUiState.Offline && isOnline -> {
                         // Network came back online - refresh data
@@ -86,7 +85,10 @@ class WeatherViewModel(
         }
     }
 
-    private fun fetchWeatherForLocation(latitude: Double, longitude: Double) {
+    private fun fetchWeatherForLocation(
+        latitude: Double,
+        longitude: Double,
+    ) {
         _uiState.value = WeatherUiState.Loading
         viewModelScope.launch {
             try {
@@ -112,10 +114,11 @@ class WeatherViewModel(
                 }
             } catch (e: Exception) {
                 val isOnline = weatherSyncService.isNetworkAvailable()
-                _uiState.value = WeatherUiState.Error(
-                    e.message ?: "Unknown error occurred",
-                    isOnline
-                )
+                _uiState.value =
+                    WeatherUiState.Error(
+                        e.message ?: "Unknown error occurred",
+                        isOnline,
+                    )
             }
         }
     }

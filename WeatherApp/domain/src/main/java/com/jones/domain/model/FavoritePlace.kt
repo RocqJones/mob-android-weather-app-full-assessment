@@ -5,6 +5,5 @@ data class FavoritePlace(
     val name: String,
     val latitude: Double,
     val longitude: Double,
-    val addedAt: Long = System.currentTimeMillis()
+    val addedAt: Long = System.currentTimeMillis(),
 )
-

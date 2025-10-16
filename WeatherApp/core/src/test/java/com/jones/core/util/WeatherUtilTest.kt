@@ -8,7 +8,6 @@ import org.junit.Test
  * Unit tests for WeatherUtil functions
  */
 class WeatherUtilTest {
-
     @Test
     fun `kelvinToCelsius converts correctly`() {
         // Given
@@ -177,4 +176,3 @@ class WeatherUtilTest {
         assertEquals(77, fahrenheit)
     }
 }
-

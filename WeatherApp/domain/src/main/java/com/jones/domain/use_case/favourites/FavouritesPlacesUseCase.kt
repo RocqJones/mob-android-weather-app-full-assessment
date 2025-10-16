@@ -5,7 +5,7 @@ import com.jones.domain.repository.FavoritePlaceRepository
 import kotlinx.coroutines.flow.Flow
 
 class FavouritesPlacesUseCase(
-    private val repository: FavoritePlaceRepository
+    private val repository: FavoritePlaceRepository,
 ) {
     fun getAllFavoritePlaces(): Flow<List<FavoritePlace>> {
         return repository.getAllFavoritePlaces()

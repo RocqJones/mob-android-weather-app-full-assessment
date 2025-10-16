@@ -7,7 +7,6 @@ import org.junit.Test
  * Unit tests for WeatherType enum
  */
 class WeatherTypeTest {
-
     @Test
     fun `fromWeatherMain returns CLEAR for Clear string`() {
         // Given
@@ -174,4 +173,3 @@ class WeatherTypeTest {
         assertEquals("forest", WeatherType.SNOW.drawableName)
     }
 }
-

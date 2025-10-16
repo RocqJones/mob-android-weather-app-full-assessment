@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(
-    private val favouritesPlacesUseCase: FavouritesPlacesUseCase
+    private val favouritesPlacesUseCase: FavouritesPlacesUseCase,
 ) : ViewModel() {
-
     private val _favoritePlaces = MutableStateFlow<List<FavoritePlace>>(emptyList())
     val favoritePlaces: StateFlow<List<FavoritePlace>> = _favoritePlaces.asStateFlow()
 
@@ -28,13 +27,18 @@ class FavoritesViewModel(
         }
     }
 
-    fun addFavoritePlace(name: String, latitude: Double, longitude: Double) {
+    fun addFavoritePlace(
+        name: String,
+        latitude: Double,
+        longitude: Double,
+    ) {
         viewModelScope.launch {
-            val place = FavoritePlace(
-                name = name,
-                latitude = latitude,
-                longitude = longitude
-            )
+            val place =
+                FavoritePlace(
+                    name = name,
+                    latitude = latitude,
+                    longitude = longitude,
+                )
             favouritesPlacesUseCase.addFavoritePlace(place)
         }
     }

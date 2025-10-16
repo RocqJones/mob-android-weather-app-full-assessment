@@ -21,7 +21,7 @@ data class LocationState(
     val coordinates: Coordinates? = null,
     val isLoading: Boolean = false,
     val hasPermission: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )
 
 /**
@@ -30,9 +30,7 @@ data class LocationState(
  * @return LocationState containing current location information
  */
 @Composable
-fun rememberLocationState(
-    onLocationReceived: (Coordinates) -> Unit = {}
-): LocationState {
+fun rememberLocationState(onLocationReceived: (Coordinates) -> Unit = {}): LocationState {
     val context = LocalContext.current
     val locationService = remember { LocationService(context) }
     val scope = rememberCoroutineScope()
@@ -40,34 +38,36 @@ fun rememberLocationState(
     var locationState by remember {
         mutableStateOf(
             LocationState(
-                hasPermission = hasLocationPermission(context)
-            )
+                hasPermission = hasLocationPermission(context),
+            ),
         )
     }
 
     // Permission launcher
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
-        val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+    val permissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestMultiplePermissions(),
+        ) { permissions ->
+            val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+            val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
-        when {
-            fineLocationGranted || coarseLocationGranted -> {
-                locationState = locationState.copy(hasPermission = true, error = null)
-                fetchLocation(locationService, scope, context) { newState ->
-                    locationState = newState
-                    newState.coordinates?.let { onLocationReceived(it) }
+            when {
+                fineLocationGranted || coarseLocationGranted -> {
+                    locationState = locationState.copy(hasPermission = true, error = null)
+                    fetchLocation(locationService, scope, context) { newState ->
+                        locationState = newState
+                        newState.coordinates?.let { onLocationReceived(it) }
+                    }
+                }
+                else -> {
+                    locationState =
+                        locationState.copy(
+                            hasPermission = false,
+                            error = context.getString(R.string.location_permission_is_required_to_show_weather_for_your_location),
+                        )
                 }
             }
-            else -> {
-                locationState = locationState.copy(
-                    hasPermission = false,
-                    error = context.getString(R.string.location_permission_is_required_to_show_weather_for_your_location)
-                )
-            }
         }
-    }
 
     // Auto-fetch location if permission is already granted
     LaunchedEffect(Unit) {
@@ -85,8 +85,8 @@ fun rememberLocationState(
             permissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                ),
             )
         }
         onDispose { }
@@ -99,23 +99,23 @@ fun rememberLocationState(
  * Function to request location permission
  */
 @Composable
-fun RequestLocationPermission(
-    onPermissionResult: (Boolean) -> Unit
-) {
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false ||
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
-        onPermissionResult(granted)
-    }
+fun RequestLocationPermission(onPermissionResult: (Boolean) -> Unit) {
+    val permissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestMultiplePermissions(),
+        ) { permissions ->
+            val granted =
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false ||
+                    permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+            onPermissionResult(granted)
+        }
 
     LaunchedEffect(Unit) {
         permissionLauncher.launch(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            ),
         )
     }
 }
@@ -123,19 +123,19 @@ fun RequestLocationPermission(
 private fun hasLocationPermission(context: Context): Boolean {
     return ContextCompat.checkSelfPermission(
         context,
-        Manifest.permission.ACCESS_FINE_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION,
     ) == PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        ) == PackageManager.PERMISSION_GRANTED
 }
 
 private fun fetchLocation(
     locationService: LocationService,
     scope: CoroutineScope,
     context: Context,
-    onStateUpdate: (LocationState) -> Unit
+    onStateUpdate: (LocationState) -> Unit,
 ) {
     onStateUpdate(LocationState(isLoading = true, hasPermission = true))
 
@@ -143,8 +143,8 @@ private fun fetchLocation(
         onStateUpdate(
             LocationState(
                 hasPermission = true,
-                error = context.getString(R.string.please_enable_location_services)
-            )
+                error = context.getString(R.string.please_enable_location_services),
+            ),
         )
         return
     }
@@ -158,8 +158,8 @@ private fun fetchLocation(
                         LocationState(
                             coordinates = lastLocation,
                             hasPermission = true,
-                            isLoading = false
-                        )
+                            isLoading = false,
+                        ),
                     )
                 }
                 else -> {
@@ -171,8 +171,8 @@ private fun fetchLocation(
                                 LocationState(
                                     coordinates = currentLocation,
                                     hasPermission = true,
-                                    isLoading = false
-                                )
+                                    isLoading = false,
+                                ),
                             )
                         }
                         else -> {
@@ -180,8 +180,8 @@ private fun fetchLocation(
                                 LocationState(
                                     hasPermission = true,
                                     isLoading = false,
-                                    error = context.getString(R.string.unable_to_get_location_please_try_again)
-                                )
+                                    error = context.getString(R.string.unable_to_get_location_please_try_again),
+                                ),
                             )
                         }
                     }
@@ -192,10 +192,9 @@ private fun fetchLocation(
                 LocationState(
                     hasPermission = true,
                     isLoading = false,
-                    error = e.message ?: context.getString(R.string.failed_to_get_location)
-                )
+                    error = e.message ?: context.getString(R.string.failed_to_get_location),
+                ),
             )
         }
     }
 }
-

@@ -9,6 +9,5 @@ data class CurrentWeather(
     val weatherMain: String?,
     val weatherDescription: String?,
     val weatherIcon: String?,
-    val timestamp: Long?
+    val timestamp: Long?,
 )
-

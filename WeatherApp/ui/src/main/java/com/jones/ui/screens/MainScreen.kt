@@ -28,7 +28,7 @@ import com.jones.ui.util.getWeatherBackground
 fun HomeScreen(
     uiState: WeatherUiState,
     onRetry: () -> Unit,
-    navController: NavController? = null
+    navController: NavController? = null,
 ) {
     Scaffold(
         topBar = {
@@ -40,7 +40,7 @@ fun HomeScreen(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(R.string.add_place)
+                            contentDescription = stringResource(R.string.add_place),
                         )
                     }
                     IconButton(onClick = {
@@ -48,40 +48,43 @@ fun HomeScreen(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Favorite,
-                            contentDescription = stringResource(R.string.favorites)
+                            contentDescription = stringResource(R.string.favorites),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             // Add background image based on weather condition
-            val weatherMain = when (uiState) {
-                is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
-                is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
-                else -> null
-            }
+            val weatherMain =
+                when (uiState) {
+                    is WeatherUiState.Success -> uiState.currentWeather?.weatherMain
+                    is WeatherUiState.Offline -> uiState.currentWeather?.weatherMain
+                    else -> null
+                }
 
             Image(
                 painter = painterResource(id = getWeatherBackground(weatherMain)),
                 contentDescription = "Weather Background",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             when (uiState) {
                 is WeatherUiState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
                 is WeatherUiState.Success -> {
@@ -89,14 +92,14 @@ fun HomeScreen(
                         currentWeather = uiState.currentWeather,
                         forecast = uiState.forecast,
                         isOnline = uiState.isOnline,
-                        navController = navController
+                        navController = navController,
                     )
                 }
                 is WeatherUiState.Error -> {
                     ErrorScreen(
                         message = uiState.message,
                         onRetry = onRetry,
-                        isOnline = uiState.isOnline
+                        isOnline = uiState.isOnline,
                     )
                 }
                 is WeatherUiState.Offline -> {
@@ -106,7 +109,7 @@ fun HomeScreen(
                             currentWeather = uiState.currentWeather,
                             forecast = uiState.forecast,
                             isOnline = false,
-                            navController = navController
+                            navController = navController,
                         )
                     }
                 }
@@ -120,11 +123,11 @@ fun WeatherContent(
     currentWeather: CurrentWeather?,
     forecast: List<Forecast>?,
     isOnline: Boolean,
-    navController: NavController?
+    navController: NavController?,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         item {
             currentWeather?.let {
@@ -134,7 +137,7 @@ fun WeatherContent(
             } ?: run {
                 TextRegular(
                     text = stringResource(R.string.no_current_weather_data_available),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -144,7 +147,7 @@ fun WeatherContent(
             TextBold(
                 text = "5-Day Forecast",
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
             )
         }
 
@@ -153,7 +156,7 @@ fun WeatherContent(
                 item {
                     TextRegular(
                         text = stringResource(R.string.no_forecast_data_available),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }

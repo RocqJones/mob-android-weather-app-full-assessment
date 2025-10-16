@@ -8,7 +8,6 @@ import org.junit.Test
  * Unit tests for Coordinates data class
  */
 class CoordinatesTest {
-
     @Test
     fun `Coordinates creates instance with correct values`() {
         // Given
@@ -127,4 +126,3 @@ class CoordinatesTest {
         assertNotEquals(coords1.hashCode(), coords3.hashCode())
     }
 }
-

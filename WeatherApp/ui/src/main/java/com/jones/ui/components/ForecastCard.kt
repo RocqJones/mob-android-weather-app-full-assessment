@@ -20,19 +20,20 @@ import java.util.*
 fun ForecastCard(forecast: Forecast) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 TextMedium(
                     text = formatForecastDate(forecast.dateText),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -40,21 +41,22 @@ fun ForecastCard(forecast: Forecast) {
                     painter = painterResource(id = getWeatherIcon(forecast.weatherMain)),
                     contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier.size(32.dp),
-                    tint = Color.Unspecified
+                    tint = Color.Unspecified,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 TextRegular(
-                    text = forecast.weatherDescription?.replaceFirstChar {
-                        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                    } ?: stringResource(R.string.no_description),
+                    text =
+                        forecast.weatherDescription?.replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                        } ?: stringResource(R.string.no_description),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
             TextBold(
                 text = "${forecast.temperature?.let { kelvinToCelsius(it) } ?: "--"}°C",
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
             )
         }
     }

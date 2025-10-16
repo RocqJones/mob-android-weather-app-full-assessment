@@ -20,7 +20,6 @@ import org.junit.Test
  * Tests the offline-first approach and network connectivity handling
  */
 class WeatherRepositoryImplTest {
-
     private lateinit var apiService: WeatherApiService
     private lateinit var currentWeatherDao: CurrentWeatherDao
     private lateinit var forecastDao: ForecastDao
@@ -33,12 +32,13 @@ class WeatherRepositoryImplTest {
         currentWeatherDao = mockk(relaxed = true)
         forecastDao = mockk(relaxed = true)
         networkConnectivityService = mockk(relaxed = true)
-        repository = WeatherRepositoryImpl(
-            apiService,
-            currentWeatherDao,
-            forecastDao,
-            networkConnectivityService
-        )
+        repository =
+            WeatherRepositoryImpl(
+                apiService,
+                currentWeatherDao,
+                forecastDao,
+                networkConnectivityService,
+            )
     }
 
     @After
@@ -47,144 +47,153 @@ class WeatherRepositoryImplTest {
     }
 
     @Test
-    fun `getCurrentWeatherFromDb returns flow from dao`() = runTest {
-        // Given
-        val cityId = 0
-        val entity = CurrentWeatherEntity(
-            id = cityId,
-            cityName = "Nairobi",
-            latitude = -1.2921,
-            longitude = 36.8219,
-            temperature = 298.15,
-            weatherMain = "Clear",
-            weatherDescription = "clear sky",
-            weatherIcon = "01d",
-            timestamp = 1697529600L
-        )
+    fun `getCurrentWeatherFromDb returns flow from dao`() =
+        runTest {
+            // Given
+            val cityId = 0
+            val entity =
+                CurrentWeatherEntity(
+                    id = cityId,
+                    cityName = "Nairobi",
+                    latitude = -1.2921,
+                    longitude = 36.8219,
+                    temperature = 298.15,
+                    weatherMain = "Clear",
+                    weatherDescription = "clear sky",
+                    weatherIcon = "01d",
+                    timestamp = 1697529600L,
+                )
 
-        every { currentWeatherDao.getCurrentWeather(cityId) } returns flowOf(entity)
+            every { currentWeatherDao.getCurrentWeather(cityId) } returns flowOf(entity)
 
-        // When
-        val result = repository.getCurrentWeatherFromDb(cityId).first()
+            // When
+            val result = repository.getCurrentWeatherFromDb(cityId).first()
 
-        // Then
-        assertEquals(entity, result)
-        verify { currentWeatherDao.getCurrentWeather(cityId) }
-    }
-
-    @Test
-    fun `getCurrentWeatherFromDb returns null when no data`() = runTest {
-        // Given
-        val cityId = 0
-        every { currentWeatherDao.getCurrentWeather(cityId) } returns flowOf(null)
-
-        // When
-        val result = repository.getCurrentWeatherFromDb(cityId).first()
-
-        // Then
-        assertEquals(null, result)
-    }
+            // Then
+            assertEquals(entity, result)
+            verify { currentWeatherDao.getCurrentWeather(cityId) }
+        }
 
     @Test
-    fun `getForecastFromDb returns flow from dao`() = runTest {
-        // Given
-        val entities = listOf(
-            ForecastEntity(
-                id = 1,
-                cityName = "Nairobi",
-                latitude = -1.2921,
-                longitude = 36.8219,
-                timestamp = 1697529600L,
-                temperature = 298.15,
-                weatherMain = "Clear",
-                weatherDescription = "clear sky",
-                weatherIcon = "01d",
-                dateText = "2025-10-17 12:00:00"
-            )
-        )
+    fun `getCurrentWeatherFromDb returns null when no data`() =
+        runTest {
+            // Given
+            val cityId = 0
+            every { currentWeatherDao.getCurrentWeather(cityId) } returns flowOf(null)
 
-        every { forecastDao.getForecast() } returns flowOf(entities)
+            // When
+            val result = repository.getCurrentWeatherFromDb(cityId).first()
 
-        // When
-        val result = repository.getForecastFromDb().first()
-
-        // Then
-        assertEquals(entities, result)
-        verify { forecastDao.getForecast() }
-    }
+            // Then
+            assertEquals(null, result)
+        }
 
     @Test
-    fun `getForecastFromDb returns empty list when no data`() = runTest {
-        // Given
-        every { forecastDao.getForecast() } returns flowOf(emptyList())
+    fun `getForecastFromDb returns flow from dao`() =
+        runTest {
+            // Given
+            val entities =
+                listOf(
+                    ForecastEntity(
+                        id = 1,
+                        cityName = "Nairobi",
+                        latitude = -1.2921,
+                        longitude = 36.8219,
+                        timestamp = 1697529600L,
+                        temperature = 298.15,
+                        weatherMain = "Clear",
+                        weatherDescription = "clear sky",
+                        weatherIcon = "01d",
+                        dateText = "2025-10-17 12:00:00",
+                    ),
+                )
 
-        // When
-        val result = repository.getForecastFromDb().first()
+            every { forecastDao.getForecast() } returns flowOf(entities)
 
-        // Then
-        assertEquals(0, result.size)
-    }
+            // When
+            val result = repository.getForecastFromDb().first()
 
-    @Test
-    fun `clearAllWeatherData deletes from both daos`() = runTest {
-        // Given
-        coEvery { currentWeatherDao.deleteAll() } just Runs
-        coEvery { forecastDao.deleteAll() } just Runs
-
-        // When
-        repository.clearAllWeatherData()
-
-        // Then
-        coVerify { currentWeatherDao.deleteAll() }
-        coVerify { forecastDao.deleteAll() }
-    }
-
-    @Test
-    fun `clearCurrentWeather deletes only from current weather dao`() = runTest {
-        // Given
-        coEvery { currentWeatherDao.deleteAll() } just Runs
-
-        // When
-        repository.clearCurrentWeather()
-
-        // Then
-        coVerify { currentWeatherDao.deleteAll() }
-        coVerify(exactly = 0) { forecastDao.deleteAll() }
-    }
+            // Then
+            assertEquals(entities, result)
+            verify { forecastDao.getForecast() }
+        }
 
     @Test
-    fun `fetchCurrentWeather does not fetch when network unavailable`() = runTest {
-        // Given
-        val latitude = -1.2921
-        val longitude = 36.8219
-        val apiKey = "test_api_key"
+    fun `getForecastFromDb returns empty list when no data`() =
+        runTest {
+            // Given
+            every { forecastDao.getForecast() } returns flowOf(emptyList())
 
-        every { networkConnectivityService.isNetworkAvailable() } returns false
+            // When
+            val result = repository.getForecastFromDb().first()
 
-        // When
-        repository.fetchCurrentWeather(latitude, longitude, apiKey)
-
-        // Then
-        coVerify(exactly = 0) { apiService.getCurrentWeather(any(), any(), any()) }
-        coVerify(exactly = 0) { currentWeatherDao.insertCurrentWeather(any()) }
-    }
+            // Then
+            assertEquals(0, result.size)
+        }
 
     @Test
-    fun `fetchForecast does not fetch when network unavailable`() = runTest {
-        // Given
-        val latitude = -1.2921
-        val longitude = 36.8219
-        val apiKey = "test_api_key"
-        val count = 7
+    fun `clearAllWeatherData deletes from both daos`() =
+        runTest {
+            // Given
+            coEvery { currentWeatherDao.deleteAll() } just Runs
+            coEvery { forecastDao.deleteAll() } just Runs
 
-        every { networkConnectivityService.isNetworkAvailable() } returns false
+            // When
+            repository.clearAllWeatherData()
 
-        // When
-        repository.fetchForecast(latitude, longitude, apiKey, count)
+            // Then
+            coVerify { currentWeatherDao.deleteAll() }
+            coVerify { forecastDao.deleteAll() }
+        }
 
-        // Then
-        coVerify(exactly = 0) { apiService.getForecast(any(), any(), any()) }
-        coVerify(exactly = 0) { forecastDao.insertForecast(any()) }
-    }
+    @Test
+    fun `clearCurrentWeather deletes only from current weather dao`() =
+        runTest {
+            // Given
+            coEvery { currentWeatherDao.deleteAll() } just Runs
+
+            // When
+            repository.clearCurrentWeather()
+
+            // Then
+            coVerify { currentWeatherDao.deleteAll() }
+            coVerify(exactly = 0) { forecastDao.deleteAll() }
+        }
+
+    @Test
+    fun `fetchCurrentWeather does not fetch when network unavailable`() =
+        runTest {
+            // Given
+            val latitude = -1.2921
+            val longitude = 36.8219
+            val apiKey = "test_api_key"
+
+            every { networkConnectivityService.isNetworkAvailable() } returns false
+
+            // When
+            repository.fetchCurrentWeather(latitude, longitude, apiKey)
+
+            // Then
+            coVerify(exactly = 0) { apiService.getCurrentWeather(any(), any(), any()) }
+            coVerify(exactly = 0) { currentWeatherDao.insertCurrentWeather(any()) }
+        }
+
+    @Test
+    fun `fetchForecast does not fetch when network unavailable`() =
+        runTest {
+            // Given
+            val latitude = -1.2921
+            val longitude = 36.8219
+            val apiKey = "test_api_key"
+            val count = 7
+
+            every { networkConnectivityService.isNetworkAvailable() } returns false
+
+            // When
+            repository.fetchForecast(latitude, longitude, apiKey, count)
+
+            // Then
+            coVerify(exactly = 0) { apiService.getForecast(any(), any(), any()) }
+            coVerify(exactly = 0) { forecastDao.insertForecast(any()) }
+        }
 }
-
