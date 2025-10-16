@@ -1,8 +1,7 @@
-package com.jones.domain.use_case
+package com.jones.domain.use_case.weather
 
-import com.jones.data.local.entity.CurrentWeatherEntity
-import com.jones.data.repository.WeatherRepository
-import com.jones.domain.use_case.weather.GetCurrentWeatherUseCase
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.repository.WeatherRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -34,7 +33,7 @@ class GetCurrentWeatherUseCaseTest {
         val latitude = -1.2921
         val longitude = 36.8219
         val apiKey = "test_api_key"
-        val mockWeather = CurrentWeatherEntity(
+        val mockWeather = CurrentWeather(
             id = 0,
             cityName = "Nairobi",
             latitude = latitude,
@@ -104,7 +103,7 @@ class GetCurrentWeatherUseCaseTest {
         val latitude = -1.2921
         val longitude = 36.8219
         val apiKey = "test_api_key"
-        val rainyWeather = CurrentWeatherEntity(
+        val rainyWeather = CurrentWeather(
             id = 0,
             cityName = "London",
             latitude = latitude,
@@ -144,4 +143,3 @@ class GetCurrentWeatherUseCaseTest {
         coVerify { repository.fetchCurrentWeather(latitude, longitude, apiKey) }
     }
 }
-
