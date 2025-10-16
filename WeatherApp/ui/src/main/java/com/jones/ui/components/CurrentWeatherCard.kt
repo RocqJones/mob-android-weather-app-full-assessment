@@ -20,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.jones.core.util.formatFullTimestamp
-import com.jones.core.util.kelvinToCelsius
+import com.jones.core.utils.formatFullTimestamp
+import com.jones.core.utils.kelvinToCelsius
 import com.jones.domain.model.CurrentWeather
 import com.jones.ui.R
 import com.jones.ui.util.getWeatherIcon

@@ -9,8 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.jones.core.util.formatForecastDate
-import com.jones.core.util.kelvinToCelsius
+import com.jones.core.utils.formatForecastDate
+import com.jones.core.utils.kelvinToCelsius
 import com.jones.domain.model.Forecast
 import com.jones.ui.R
 import com.jones.ui.util.getWeatherIcon
