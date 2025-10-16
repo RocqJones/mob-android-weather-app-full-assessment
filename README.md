@@ -145,17 +145,17 @@ core
 - `ACCESS_COARSE_LOCATION` - Approximate location as fallback
 
 ### Development Setup
-
 1. Clone the repository
 2. Create `local.properties` file in the root directory
-3. Add the following API keys:
+3. Add the following API keys from **Github Secrets** of this repository:
    ```
    WEATHER_API_KEY=your_openweather_api_key_here
    PLACES_API_KEY=your_google_places_api_key_here
    ```
-4. Update `PlaceSearchScreen.kt` line 38 to use your API key:
+4. Update `WeatherApplication.kt` in **app** module with API keys:
    ```kotlin
-   Places.initialize(context.applicationContext, BuildConfig.PLACES_API_KEY)
+   Constants.API_KEY = BuildConfig.WEATHER_API_KEY
+   Constants.PLACES_API_KEY = BuildConfig.PLACES_API_KEY
    ```
 5. Sync Gradle dependencies
 6. Run the app
