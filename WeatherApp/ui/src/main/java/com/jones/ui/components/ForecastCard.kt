@@ -11,12 +11,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jones.core.util.formatForecastDate
 import com.jones.core.util.kelvinToCelsius
-import com.jones.data.local.entity.ForecastEntity
+import com.jones.domain.model.Forecast
 import com.jones.ui.util.getWeatherIcon
 import java.util.*
 
 @Composable
-fun ForecastCard(forecast: ForecastEntity) {
+fun ForecastCard(forecast: Forecast) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

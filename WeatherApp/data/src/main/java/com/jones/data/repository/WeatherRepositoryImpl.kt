@@ -7,7 +7,11 @@ import com.jones.data.local.dao.ForecastDao
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.local.entity.ForecastEntity
 import com.jones.data.remote.api.WeatherApiService
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.model.Forecast
+import com.jones.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class WeatherRepositoryImpl(
     private val apiService: WeatherApiService,
@@ -88,20 +92,51 @@ class WeatherRepositoryImpl(
         }
     }
 
-    override fun getCurrentWeatherFromDb(cityId: Int): Flow<CurrentWeatherEntity?> {
-        return currentWeatherDao.getCurrentWeather(cityId)
+    override fun getCurrentWeatherFromDb(cityId: Int): Flow<CurrentWeather?> {
+        return currentWeatherDao.getCurrentWeather(cityId).map { entity ->
+            entity?.toDomainModel()
+        }
     }
 
-    override fun getForecastFromDb(): Flow<List<ForecastEntity>> {
-        return forecastDao.getForecast()
+    override fun getForecastFromDb(): Flow<List<Forecast>> {
+        return forecastDao.getForecast().map { entities ->
+            entities.map { it.toDomainModel() }
+        }
     }
 
-    override suspend fun clearAllWeatherData() {
+    // Additional repository methods (not part of domain interface)
+    suspend fun clearAllWeatherData() {
         currentWeatherDao.deleteAll()
         forecastDao.deleteAll()
     }
 
-    override suspend fun clearCurrentWeather() {
+    suspend fun clearCurrentWeather() {
         currentWeatherDao.deleteAll()
+    }
+
+    // Mapping functions
+    private fun CurrentWeatherEntity.toDomainModel(): CurrentWeather {
+        return CurrentWeather(
+            id = id,
+            cityName = cityName,
+            latitude = latitude,
+            longitude = longitude,
+            temperature = temperature,
+            weatherMain = weatherMain,
+            weatherDescription = weatherDescription,
+            weatherIcon = weatherIcon,
+            timestamp = timestamp
+        )
+    }
+
+    private fun ForecastEntity.toDomainModel(): Forecast {
+        return Forecast(
+            id = id,
+            dateText = dateText,
+            temperature = temperature,
+            weatherMain = weatherMain,
+            weatherDescription = weatherDescription,
+            weatherIcon = weatherIcon
+        )
     }
 }

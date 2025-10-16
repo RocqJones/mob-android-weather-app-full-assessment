@@ -1,7 +1,7 @@
-package com.jones.domain.use_case
+package com.jones.domain.use_case.weather
 
-import com.jones.data.local.entity.CurrentWeatherEntity
-import com.jones.data.repository.WeatherRepository
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -15,7 +15,7 @@ class GetCurrentWeatherUseCase(
         latitude: Double,
         longitude: Double,
         apiKey: String,
-    ): Flow<CurrentWeatherEntity?> {
+    ): Flow<CurrentWeather?> {
         repository.fetchCurrentWeather(latitude, longitude, apiKey)
 
         return repository.getCurrentWeatherFromDb(0)

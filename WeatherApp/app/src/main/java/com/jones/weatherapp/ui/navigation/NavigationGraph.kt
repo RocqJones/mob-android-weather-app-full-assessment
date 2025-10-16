@@ -13,8 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jones.core.location.Coordinates
 import com.jones.ui.location.rememberLocationState
+import com.jones.ui.screens.FavoritesScreen
 import com.jones.ui.screens.HomeScreen
+import com.jones.ui.screens.PlaceSearchScreen
 import com.jones.ui.screens.WeatherDetailsScreen
 import com.jones.ui.viewmodel.WeatherViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -55,6 +58,24 @@ fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
                 navController = navController,
                 uiState = uiState,
                 onRetry = { weatherViewModel.fetchWeather() },
+            )
+        }
+
+        composable(Screen.Favorites.route) {
+            FavoritesScreen(
+                navController = navController,
+                onPlaceSelected = { latitude, longitude ->
+                    weatherViewModel.updateLocation(Coordinates(latitude, longitude))
+                }
+            )
+        }
+
+        composable(Screen.PlaceSearch.route) {
+            PlaceSearchScreen(
+                navController = navController,
+                onPlaceSelected = { name, latitude, longitude ->
+                    weatherViewModel.updateLocation(Coordinates(latitude, longitude))
+                }
             )
         }
     }

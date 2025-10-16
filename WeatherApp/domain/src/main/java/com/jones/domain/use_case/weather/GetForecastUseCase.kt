@@ -1,7 +1,7 @@
-package com.jones.domain.use_case
+package com.jones.domain.use_case.weather
 
-import com.jones.data.local.entity.ForecastEntity
-import com.jones.data.repository.WeatherRepository
+import com.jones.domain.model.Forecast
+import com.jones.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -16,7 +16,7 @@ class GetForecastUseCase(
         longitude: Double,
         apiKey: String,
         count: Int,
-    ): Flow<List<ForecastEntity>> {
+    ): Flow<List<Forecast>> {
         repository.fetchForecast(latitude, longitude, apiKey, count)
 
         return repository.getForecastFromDb()

@@ -2,6 +2,7 @@ package com.jones.domain.use_case
 
 import com.jones.data.local.entity.CurrentWeatherEntity
 import com.jones.data.repository.WeatherRepository
+import com.jones.domain.use_case.weather.GetCurrentWeatherUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
