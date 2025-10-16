@@ -3,12 +3,17 @@
 This project uses modularization and MVVM architecture for scalability and maintainability.
 
 ### Recording & screenshots
-- [Demo Video](https://www.loom.com/share/your_demo_video_link)
-- ![Screenshot1](screenshots/screenshot1.png)
-- ![Screenshot2](screenshots/screenshot2.png)
-- ![Screenshot3](screenshots/screenshot3.png)
-- ![Screenshot4](screenshots/screenshot4.png)
-- ![Screenshot5](screenshots/screenshot5.png)
+Recording demonstrating key features and app flow:
+- [Demo Video](screenshots_recording/weather_app_demo.mp4)
+
+Key screenshots:
+- ![Screenshot1](screenshots_recording/screenshot1.png)
+- ![Screenshot2](screenshots_recording/screenshot2.png)
+- ![Screenshot3](screenshots_recording/screenshot3.png)
+- ![Screenshot4](screenshots_recording/screenshot4.png)
+- ![Screenshot5](screenshots_recording/screenshot5.png)
+- ![Screenshot5](screenshots_recording/screenshot6.png)
+- ![Screenshot5](screenshots_recording/screenshot7.png)
 
 ### Architecture Overview
 
