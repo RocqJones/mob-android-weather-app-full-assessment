@@ -2,24 +2,6 @@
 
 This project uses modularization and MVVM architecture for scalability and maintainability.
 
-### Recording & screenshots
-**Recording**
-[Demo Video](screenshots_recording/weather_app_demo.mp4)
-
-**Screenshots:**
-
-<p align="start">
-    <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
-    <img src="screenshots_recording/screenshot3.png" width="300" alt="Favorites">
-    <img src="screenshots_recording/screenshot4.png" width="300" alt="Search Place">
-</p>
-
-<p align="start">
-    <img src="screenshots_recording/screenshot5.png" width="300" alt="Dark Mode">
-    <img src="screenshots_recording/screenshot6.png" width="300" alt="Offline Mode">
-    <img src="screenshots_recording/screenshot7.png" width="300" alt="Extended Forecast">
-</p>
-
 ### Architecture Overview
 
 **Modules:**
@@ -246,3 +228,24 @@ The project includes comprehensive unit test coverage across all layers:
 - ✅ **Coroutine Testing** using kotlinx-coroutines-test
 - ✅ **Flow Testing** with proper collection
 - ✅ **Edge Cases** including null handling, empty states, and error scenarios
+
+### Recording & screenshots
+**Recording**
+[Demo Video](screenshots_recording/weather_app_demo.mp4)
+
+**Screenshots:**
+
+<p align="start">
+    <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
+    <img src="screenshots_recording/screenshot3.png" width="300" alt="Favorites">
+</p>
+
+<p align="start">
+    <img src="screenshots_recording/screenshot4.png" width="300" alt="Search Place">
+    <img src="screenshots_recording/screenshot5.png" width="300" alt="Weather Details">
+</p>
+
+<p align="start">
+    <img src="screenshots_recording/screenshot6.png" width="300" alt="Offline Mode">
+    <img src="screenshots_recording/screenshot7.png" width="300" alt="Extended Forecast">
+</p>
