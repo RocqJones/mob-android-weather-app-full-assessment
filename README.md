@@ -226,7 +226,7 @@ The project includes comprehensive unit test coverage across all layers:
 ```
 
 **Test Coverage Summary:**
-- ✅ **65+ Unit Tests** covering business logic, data mapping, and UI state
+- ✅ **Unit Tests** covering business logic, data mapping, and UI state
 - ✅ **TDD Approach** with MockK for mocking
 - ✅ **Coroutine Testing** using kotlinx-coroutines-test
 - ✅ **Flow Testing** with proper collection
