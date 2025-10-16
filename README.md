@@ -10,7 +10,6 @@ This project uses modularization and MVVM architecture for scalability and maint
 
 <p align="start">
     <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
-    <img src="screenshots_recording/screenshot2.png" width="300" alt="Weather Details">
     <img src="screenshots_recording/screenshot3.png" width="300" alt="Favorites">
     <img src="screenshots_recording/screenshot4.png" width="300" alt="Search Place">
 </p>
