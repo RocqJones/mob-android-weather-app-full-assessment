@@ -12,14 +12,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
@@ -49,10 +47,9 @@ fun CurrentWeatherCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
+                TextBold(
                     text = weather.cityName ?: stringResource(R.string.unknown_location),
                     style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
                 Icon(
@@ -64,13 +61,12 @@ fun CurrentWeatherCard(
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
+            TextBold(
                 text = "${weather.temperature?.let { kelvinToCelsius(it) } ?: "--"}°C",
-                style = MaterialTheme.typography.displayLarge,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.displayLarge
             )
 
-            Text(
+            TextRegular(
                 text = weather.weatherDescription?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                 } ?: stringResource(R.string.no_description),
@@ -80,7 +76,7 @@ fun CurrentWeatherCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             weather.timestamp?.let {
-                Text(
+                TextRegular(
                     text = "Last Updated: ${formatFullTimestamp(it)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

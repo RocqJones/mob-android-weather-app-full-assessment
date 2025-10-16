@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.libraries.places.api.Places
@@ -25,6 +24,9 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.jones.core.constants.Constants
 import com.jones.ui.R
+import com.jones.ui.components.TextBold
+import com.jones.ui.components.TextMedium
+import com.jones.ui.components.TextRegular
 import com.jones.ui.viewmodel.FavoritesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -126,7 +128,7 @@ fun PlaceSearchScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.search_location)) },
+                title = { TextMedium(stringResource(R.string.search_location)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
@@ -159,15 +161,14 @@ fun PlaceSearchScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
+            TextBold(
                 text = stringResource(R.string.find_a_location),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineMedium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
+            TextRegular(
                 text = stringResource(R.string.search_for_cities_worldwide_to_add_to_your_favorites),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -187,12 +188,12 @@ fun PlaceSearchScreen(
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(R.string.search_for_a_place))
+                TextMedium(stringResource(R.string.search_for_a_place))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
+            TextRegular(
                 text = "Powered by Google Places",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -26,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -35,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
@@ -46,6 +44,9 @@ import com.jones.domain.model.Forecast
 import com.jones.ui.R
 import com.jones.ui.components.ForecastCard
 import com.jones.ui.components.OfflineMessage
+import com.jones.ui.components.TextBold
+import com.jones.ui.components.TextMedium
+import com.jones.ui.components.TextRegular
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
 import java.util.Locale
@@ -60,11 +61,11 @@ fun WeatherDetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.details)) },
+                title = { TextMedium(stringResource(R.string.details)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)
                         )
                     }
@@ -149,7 +150,7 @@ private fun WeatherDetailsContent(
                 WeatherDetailsCard(weather = it)
                 Spacer(modifier = Modifier.height(24.dp))
             } ?: run {
-                Text(
+                TextRegular(
                     text = stringResource(R.string.no_current_weather_data_available),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -158,10 +159,9 @@ private fun WeatherDetailsContent(
         }
 
         item {
-            Text(
+            TextBold(
                 text = "Extended Forecast",
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -169,7 +169,7 @@ private fun WeatherDetailsContent(
         when {
             forecast.isNullOrEmpty() -> {
                 item {
-                    Text(
+                    TextRegular(
                         text = stringResource(R.string.no_forecast_data_available),
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -194,10 +194,9 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
+            TextBold(
                 text = stringResource(R.string.additional_information),
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
@@ -250,16 +249,15 @@ private fun DetailRow(label: String, value: String) {
             .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
+        TextRegular(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
         )
-        Text(
+        TextMedium(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium,
             modifier = Modifier.weight(1f)
         )
     }
@@ -285,7 +283,7 @@ private fun ErrorContent(
                     containerColor = MaterialTheme.colorScheme.errorContainer
                 )
             ) {
-                Text(
+                TextMedium(
                     text = stringResource(R.string.no_internet_connection),
                     modifier = Modifier.padding(16.dp),
                     color = MaterialTheme.colorScheme.onErrorContainer,
@@ -304,7 +302,7 @@ private fun ErrorContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
+        TextBold(
             text = stringResource(R.string.something_went_wrong),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.error
@@ -312,7 +310,7 @@ private fun ErrorContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
+        TextRegular(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -321,7 +319,7 @@ private fun ErrorContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = onRetry) {
-            Text(stringResource(R.string.retry))
+            TextMedium(stringResource(R.string.retry))
         }
     }
 }

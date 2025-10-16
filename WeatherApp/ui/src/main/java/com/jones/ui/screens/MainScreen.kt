@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.domain.model.CurrentWeather
@@ -34,7 +33,7 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.home)) },
+                title = { TextMedium(stringResource(R.string.home)) },
                 actions = {
                     IconButton(onClick = {
                         navController?.navigate("place_search")
@@ -133,7 +132,7 @@ fun WeatherContent(
 
                 Spacer(modifier = Modifier.height(24.dp))
             } ?: run {
-                Text(
+                TextRegular(
                     text = stringResource(R.string.no_current_weather_data_available),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -142,10 +141,9 @@ fun WeatherContent(
         }
 
         item {
-            Text(
+            TextBold(
                 text = "5-Day Forecast",
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -153,7 +151,7 @@ fun WeatherContent(
         when {
             forecast.isNullOrEmpty() -> {
                 item {
-                    Text(
+                    TextRegular(
                         text = stringResource(R.string.no_forecast_data_available),
                         style = MaterialTheme.typography.bodyMedium
                     )

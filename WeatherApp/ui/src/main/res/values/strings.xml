@@ -36,4 +36,8 @@
     <string name="no_description">No description</string>
     <string name="weather_icon">Weather Icon</string>
     <string name="you_are_offline_showing_cached_data">⚠️ You are offline. Showing cached data.</string>
+    <string name="unable_to_get_location_please_try_again">Unable to get location. Please try again.</string>
+    <string name="failed_to_get_location">Failed to get location</string>
+    <string name="please_enable_location_services">Please enable location services</string>
+    <string name="location_permission_is_required_to_show_weather_for_your_location">Location permission is required to show weather for your location</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
@@ -13,11 +13,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.domain.model.FavoritePlace
 import com.jones.ui.R
+import com.jones.ui.components.TextBold
+import com.jones.ui.components.TextMedium
+import com.jones.ui.components.TextRegular
 import com.jones.ui.viewmodel.FavoritesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,11 +35,11 @@ fun FavoritesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.favorite_places)) },
+                title = { TextMedium(stringResource(R.string.favorite_places)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)
                         )
                     }
@@ -71,13 +73,13 @@ fun FavoritesScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(
+                        TextBold(
                             text = stringResource(R.string.no_favorite_places),
                             style = MaterialTheme.typography.headlineSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(
+                        TextRegular(
                             text = stringResource(R.string.add_places_to_see_weather_for_different_locations),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -120,8 +122,8 @@ fun FavoritePlaceItem(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text(stringResource(R.string.delete_favorite_place)) },
-            text = { Text("Are you sure you want to remove '${place.name}' from favorites?") },
+            title = { TextMedium(stringResource(R.string.delete_favorite_place)) },
+            text = { TextRegular("Are you sure you want to remove '${place.name}' from favorites?") },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -129,12 +131,12 @@ fun FavoritePlaceItem(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text(stringResource(R.string.delete))
+                    TextMedium(stringResource(R.string.delete))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text(stringResource(R.string.cancel))
+                    TextMedium(stringResource(R.string.cancel))
                 }
             }
         )
@@ -164,13 +166,12 @@ fun FavoritePlaceItem(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(
+                TextBold(
                     text = place.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
+                TextRegular(
                     text = "Lat: ${"%.4f".format(place.latitude)}, Lon: ${"%.4f".format(place.longitude)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -187,4 +188,3 @@ fun FavoritePlaceItem(
         }
     }
 }
-

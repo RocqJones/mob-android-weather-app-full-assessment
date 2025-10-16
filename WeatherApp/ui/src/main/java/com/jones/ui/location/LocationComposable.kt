@@ -10,6 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.jones.core.location.Coordinates
 import com.jones.core.location.LocationService
+import com.jones.ui.R
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 /**
@@ -23,7 +25,7 @@ data class LocationState(
 )
 
 /**
- * Composable function to handle location permissions and fetching
+ * Handles location permissions and fetching
  * @param onLocationReceived Callback when location is successfully retrieved
  * @return LocationState containing current location information
  */
@@ -53,7 +55,7 @@ fun rememberLocationState(
         when {
             fineLocationGranted || coarseLocationGranted -> {
                 locationState = locationState.copy(hasPermission = true, error = null)
-                fetchLocation(locationService, scope) { newState ->
+                fetchLocation(locationService, scope, context) { newState ->
                     locationState = newState
                     newState.coordinates?.let { onLocationReceived(it) }
                 }
@@ -61,7 +63,7 @@ fun rememberLocationState(
             else -> {
                 locationState = locationState.copy(
                     hasPermission = false,
-                    error = "Location permission is required to show weather for your location"
+                    error = context.getString(R.string.location_permission_is_required_to_show_weather_for_your_location)
                 )
             }
         }
@@ -70,7 +72,7 @@ fun rememberLocationState(
     // Auto-fetch location if permission is already granted
     LaunchedEffect(Unit) {
         if (locationState.hasPermission) {
-            fetchLocation(locationService, scope) { newState ->
+            fetchLocation(locationService, scope, context) { newState ->
                 locationState = newState
                 newState.coordinates?.let { onLocationReceived(it) }
             }
@@ -131,7 +133,8 @@ private fun hasLocationPermission(context: Context): Boolean {
 
 private fun fetchLocation(
     locationService: LocationService,
-    scope: kotlinx.coroutines.CoroutineScope,
+    scope: CoroutineScope,
+    context: Context,
     onStateUpdate: (LocationState) -> Unit
 ) {
     onStateUpdate(LocationState(isLoading = true, hasPermission = true))
@@ -140,7 +143,7 @@ private fun fetchLocation(
         onStateUpdate(
             LocationState(
                 hasPermission = true,
-                error = "Please enable location services"
+                error = context.getString(R.string.please_enable_location_services)
             )
         )
         return
@@ -177,7 +180,7 @@ private fun fetchLocation(
                                 LocationState(
                                     hasPermission = true,
                                     isLoading = false,
-                                    error = "Unable to get location. Please try again."
+                                    error = context.getString(R.string.unable_to_get_location_please_try_again)
                                 )
                             )
                         }
@@ -189,7 +192,7 @@ private fun fetchLocation(
                 LocationState(
                     hasPermission = true,
                     isLoading = false,
-                    error = e.message ?: "Failed to get location"
+                    error = e.message ?: context.getString(R.string.failed_to_get_location)
                 )
             )
         }
