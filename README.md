@@ -2,7 +2,10 @@
 
 This project uses modularization and MVVM architecture for scalability and maintainability.
 
-### Architecture Overview
+## APK
+- [Download APK here](https://tsfr.io/join/hz3dyv)
+
+## Architecture Overview
 
 **Modules:**
 
@@ -19,7 +22,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 - **domain**: Business logic, use cases, domain models (independent core layer).
 - **data**: Repositories, data sources, API (Retrofit), offline support (Room DB), sync service.
 
-### Tech Stack
+## Tech Stack
 
 **Networking:**
 - Retrofit - REST API client
@@ -52,7 +55,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 **Typography:**
 - [Poppins Font Family](https://fonts.google.com/specimen/Poppins) from Google Fonts - Custom typography with Regular, Medium, and Bold weights for consistent and modern text styling throughout the app
 
-### API Integration
+## API Integration
 
 **OpenWeatherMap API:**
 - Current Weather: `/data/2.5/weather`
@@ -64,7 +67,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 - Real-time place search with coordinates
 - Integrated with favorites management
 
-### Offline-First Architecture
+## Offline-First Architecture
 
 The app implements a robust offline-first strategy:
 
@@ -86,7 +89,7 @@ The app implements a robust offline-first strategy:
 - ✅ No crashes due to network failures
 - ✅ Smooth user experience regardless of connectivity
 
-### Module Dependencies
+## Module Dependencies
 
 ```
 app
@@ -112,7 +115,7 @@ core
  └─ Constants
 ```
 
-### Key Features
+## Key Features
 
 ✅ Modular architecture for scalability  
 ✅ MVVM pattern with clear separation of concerns  
@@ -135,7 +138,7 @@ core
 ✅ Composable location state management
 ✅ **Comprehensive unit test coverage (TDD)**
 
-### Security & Permissions
+## Security & Permissions
 
 **API Security:**
 - API keys stored in `local.properties` (not version controlled)
@@ -147,7 +150,7 @@ core
 - `ACCESS_FINE_LOCATION` - Precise location for accurate weather
 - `ACCESS_COARSE_LOCATION` - Approximate location as fallback
 
-### Development Setup
+## Development Setup
 1. Clone the repository
 2. Create `local.properties` file in the root directory
 3. Add the following API keys from **Github Secrets** of this repository:
@@ -168,14 +171,14 @@ core
 - **OpenWeatherMap**: Sign up at [openweathermap.org](https://openweathermap.org/api)
 - **Google Places**: Enable Places API in [Google Cloud Console](https://console.cloud.google.com/)
 
-### UI Components
+## UI Components
 - **Screens:** Home, Favorites, Place Search, Weather Details
 - **Reusable Components:** Weather cards, forecast items, offline/error messages
 - **ViewModels:** WeatherViewModel, FavoritesViewModel
 - **State Classes:** UI state representations
 - **Location Composable:** Location permission and fetching
 
-### Code Quality
+## Code Quality
 
 Run code formatting:
 ```bash
@@ -187,7 +190,7 @@ Check code style:
 ./gradlew ktlintCheck
 ```
 
-### Testing
+## Testing
 
 The project includes comprehensive unit test coverage across all layers:
 
@@ -229,11 +232,14 @@ The project includes comprehensive unit test coverage across all layers:
 - ✅ **Flow Testing** with proper collection
 - ✅ **Edge Cases** including null handling, empty states, and error scenarios
 
-### Recording & screenshots
-**Recording**
-[Demo Video](screenshots_recording/weather_app_demo.mp4)
+## Recording & screenshots
+- **Recording:** [Demo Video](screenshots_recording/weather_app_demo.mp4)
 
-**Screenshots:**
+<p align="start">
+    <video src="[https://github.com/Dynamic-Visual-Technologies-PTY-LTD/mob-android-weather-app-full-assessment-starter-project-defed850-18a3-41f5-8e78-d077d715e2ec/blob/main/screenshots_recording/weather_app_demo.mp4]" width="300" controls></video>
+</p>
+
+- **Screenshots:**
 
 <p align="start">
     <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
