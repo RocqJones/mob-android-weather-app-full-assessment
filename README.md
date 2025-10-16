@@ -57,7 +57,9 @@ This project uses modularization and MVVM architecture for scalability and maint
 - API Key: Securely stored in `local.properties`
 
 **Google Places API:**
-- Place Autocomplete: For location search (mock data currently)
+- Place Autocomplete with overlay mode
+- Real-time place search with coordinates
+- Integrated with favorites management
 
 ### Offline-First Architecture
 
@@ -145,10 +147,23 @@ core
 ### Development Setup
 
 1. Clone the repository
-2. Add `WEATHER_API_KEY=your_api_key_here` to `local.properties`
-3. Sync Gradle dependencies
-4. Run the app
-5. Grant location permission when prompted
+2. Create `local.properties` file in the root directory
+3. Add the following API keys:
+   ```
+   WEATHER_API_KEY=your_openweather_api_key_here
+   PLACES_API_KEY=your_google_places_api_key_here
+   ```
+4. Update `PlaceSearchScreen.kt` line 38 to use your API key:
+   ```kotlin
+   Places.initialize(context.applicationContext, BuildConfig.PLACES_API_KEY)
+   ```
+5. Sync Gradle dependencies
+6. Run the app
+7. Grant location permission when prompted
+
+**Getting API Keys:**
+- **OpenWeatherMap**: Sign up at [openweathermap.org](https://openweathermap.org/api)
+- **Google Places**: Enable Places API in [Google Cloud Console](https://console.cloud.google.com/)
 
 ### UI Components
 - **Screens:** Home, Favorites, Place Search, Weather Details

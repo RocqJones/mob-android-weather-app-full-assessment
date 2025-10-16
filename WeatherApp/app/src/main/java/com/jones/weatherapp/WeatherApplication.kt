@@ -14,6 +14,7 @@ class WeatherApplication : Application() {
 
         // Init API key
         Constants.API_KEY = BuildConfig.WEATHER_API_KEY
+        Constants.PLACES_API_KEY = BuildConfig.PLACES_API_KEY
 
         startKoin {
             androidLogger(Level.DEBUG)

@@ -59,6 +59,9 @@ dependencies {
     // Location Services
     implementation(libs.play.services.location)
 
+    // Google Places SDK
+    implementation(libs.places)
+
     // Modules
     implementation(project(":core"))
     implementation(project(":data"))
