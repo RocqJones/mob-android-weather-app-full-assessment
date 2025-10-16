@@ -2,6 +2,14 @@
 
 This project uses modularization and MVVM architecture for scalability and maintainability.
 
+### Recording & screenshots
+- [Demo Video](https://www.loom.com/share/your_demo_video_link)
+- ![Screenshot1](screenshots/screenshot1.png)
+- ![Screenshot2](screenshots/screenshot2.png)
+- ![Screenshot3](screenshots/screenshot3.png)
+- ![Screenshot4](screenshots/screenshot4.png)
+- ![Screenshot5](screenshots/screenshot5.png)
+
 ### Architecture Overview
 
 **Modules:**
@@ -172,14 +180,6 @@ core
 - **State Classes:** UI state representations
 - **Location Composable:** Location permission and fetching
 
-### Recording & screenshots
-- [Demo Video](https://www.loom.com/share/your_demo_video_link)
-- ![Screenshot1](screenshots/screenshot1.png)
-- ![Screenshot2](screenshots/screenshot2.png)
-- ![Screenshot3](screenshots/screenshot3.png)
-- ![Screenshot4](screenshots/screenshot4.png)
-- ![Screenshot5](screenshots/screenshot5.png)
-
 ### Code Quality
 
 Run code formatting:
@@ -191,3 +191,45 @@ Check code style:
 ```bash
 ./gradlew ktlintCheck
 ```
+
+### Testing
+
+The project includes comprehensive unit test coverage across all layers:
+
+**Domain Layer Tests:**
+- `GetCurrentWeatherUseCaseTest` - Weather fetching logic
+- `GetForecastUseCaseTest` - Forecast fetching logic  
+- `FavouritesPlacesUseCaseTest` - Favorites management logic
+- `CurrentWeatherTest` - Domain model validation
+- `ForecastTest` - Domain model validation
+- `FavoritePlaceTest` - Domain model validation
+
+**Data Layer Tests:**
+- `FavoritePlaceRepositoryImplTest` - Repository implementation and mapping
+- `FavoritePlaceEntityTest` - Entity model validation
+- `CurrentWeatherEntityTest` - Entity model validation
+- `ForecastEntityTest` - Entity model validation
+- `WeatherRepositoryImplTest` - Weather repository implementation
+
+**UI Layer Tests:**
+- `WeatherViewModelTest` - Weather state management
+- `FavoritesViewModelTest` - Favorites state management
+- `WeatherUiStateTest` - UI state validation
+- `WeatherUtilTest` - Weather utility functions
+
+**Run all tests:**
+```bash
+./gradlew test
+```
+
+**Run tests with coverage:**
+```bash
+./gradlew testDebugUnitTest
+```
+
+**Test Coverage Summary:**
+- ✅ **65+ Unit Tests** covering business logic, data mapping, and UI state
+- ✅ **TDD Approach** with MockK for mocking
+- ✅ **Coroutine Testing** using kotlinx-coroutines-test
+- ✅ **Flow Testing** with proper collection
+- ✅ **Edge Cases** including null handling, empty states, and error scenarios
