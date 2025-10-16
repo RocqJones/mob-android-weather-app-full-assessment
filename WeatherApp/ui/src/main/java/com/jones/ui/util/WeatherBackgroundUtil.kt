@@ -1,7 +1,5 @@
 package com.jones.ui.util
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import com.jones.core.util.WeatherType
 import com.jones.ui.R
 
@@ -11,10 +9,8 @@ import com.jones.ui.R
  * @param weatherMain The main weather condition from the API:"Clear", "Clouds", "Rain", "Snow")
  * @return The drawable resource ID for the corresponding background image
  */
-@Composable
 fun getWeatherBackground(weatherMain: String?): Int {
     val drawableName = WeatherType.getDrawableNameForWeather(weatherMain)
-    val context = LocalContext.current
 
     return when (drawableName) {
         "sunny" -> R.drawable.sunny
@@ -31,4 +27,3 @@ fun getWeatherBackground(weatherMain: String?): Int {
 fun getWeatherBackgroundName(weatherMain: String?): String {
     return WeatherType.getDrawableNameForWeather(weatherMain)
 }
-

@@ -2,6 +2,24 @@
 
 This project uses modularization and MVVM architecture for scalability and maintainability.
 
+### Recording & screenshots
+**Recording**
+[Demo Video](screenshots_recording/weather_app_demo.mp4)
+
+**Screenshots:**
+
+<p align="start">
+    <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
+    <img src="screenshots_recording/screenshot3.png" width="300" alt="Favorites">
+    <img src="screenshots_recording/screenshot4.png" width="300" alt="Search Place">
+</p>
+
+<p align="start">
+    <img src="screenshots_recording/screenshot5.png" width="300" alt="Dark Mode">
+    <img src="screenshots_recording/screenshot6.png" width="300" alt="Offline Mode">
+    <img src="screenshots_recording/screenshot7.png" width="300" alt="Extended Forecast">
+</p>
+
 ### Architecture Overview
 
 **Modules:**
@@ -48,6 +66,9 @@ This project uses modularization and MVVM architecture for scalability and maint
 - Jetpack Compose - Modern declarative UI
 - Material3 - Material Design components
 - Navigation Compose - Screen navigation
+
+**Typography:**
+- [Poppins Font Family](https://fonts.google.com/specimen/Poppins) from Google Fonts - Custom typography with Regular, Medium, and Bold weights for consistent and modern text styling throughout the app
 
 ### API Integration
 
@@ -145,17 +166,17 @@ core
 - `ACCESS_COARSE_LOCATION` - Approximate location as fallback
 
 ### Development Setup
-
 1. Clone the repository
 2. Create `local.properties` file in the root directory
-3. Add the following API keys:
+3. Add the following API keys from **Github Secrets** of this repository:
    ```
    WEATHER_API_KEY=your_openweather_api_key_here
    PLACES_API_KEY=your_google_places_api_key_here
    ```
-4. Update `PlaceSearchScreen.kt` line 38 to use your API key:
+4. Update `WeatherApplication.kt` in **app** module with API keys:
    ```kotlin
-   Places.initialize(context.applicationContext, BuildConfig.PLACES_API_KEY)
+   Constants.API_KEY = BuildConfig.WEATHER_API_KEY
+   Constants.PLACES_API_KEY = BuildConfig.PLACES_API_KEY
    ```
 5. Sync Gradle dependencies
 6. Run the app
@@ -183,3 +204,45 @@ Check code style:
 ```bash
 ./gradlew ktlintCheck
 ```
+
+### Testing
+
+The project includes comprehensive unit test coverage across all layers:
+
+**Domain Layer Tests:**
+- `GetCurrentWeatherUseCaseTest` - Weather fetching logic
+- `GetForecastUseCaseTest` - Forecast fetching logic  
+- `FavouritesPlacesUseCaseTest` - Favorites management logic
+- `CurrentWeatherTest` - Domain model validation
+- `ForecastTest` - Domain model validation
+- `FavoritePlaceTest` - Domain model validation
+
+**Data Layer Tests:**
+- `FavoritePlaceRepositoryImplTest` - Repository implementation and mapping
+- `FavoritePlaceEntityTest` - Entity model validation
+- `CurrentWeatherEntityTest` - Entity model validation
+- `ForecastEntityTest` - Entity model validation
+- `WeatherRepositoryImplTest` - Weather repository implementation
+
+**UI Layer Tests:**
+- `WeatherViewModelTest` - Weather state management
+- `FavoritesViewModelTest` - Favorites state management
+- `WeatherUiStateTest` - UI state validation
+- `WeatherUtilTest` - Weather utility functions
+
+**Run all tests:**
+```bash
+./gradlew test
+```
+
+**Run tests with coverage:**
+```bash
+./gradlew testDebugUnitTest
+```
+
+**Test Coverage Summary:**
+- ✅ **65+ Unit Tests** covering business logic, data mapping, and UI state
+- ✅ **TDD Approach** with MockK for mocking
+- ✅ **Coroutine Testing** using kotlinx-coroutines-test
+- ✅ **Flow Testing** with proper collection
+- ✅ **Edge Cases** including null handling, empty states, and error scenarios

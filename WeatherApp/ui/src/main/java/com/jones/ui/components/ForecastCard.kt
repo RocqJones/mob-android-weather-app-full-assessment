@@ -7,11 +7,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jones.core.util.formatForecastDate
 import com.jones.core.util.kelvinToCelsius
 import com.jones.domain.model.Forecast
+import com.jones.ui.R
 import com.jones.ui.util.getWeatherIcon
 import java.util.*
 
@@ -29,33 +30,31 @@ fun ForecastCard(forecast: Forecast) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
+                TextMedium(
                     text = formatForecastDate(forecast.dateText),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Icon(
                     painter = painterResource(id = getWeatherIcon(forecast.weatherMain)),
-                    contentDescription = "Weather Icon",
+                    contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier.size(32.dp),
                     tint = Color.Unspecified
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
+                TextRegular(
                     text = forecast.weatherDescription?.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                    } ?: "No description",
+                    } ?: stringResource(R.string.no_description),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
-            Text(
+            TextBold(
                 text = "${forecast.temperature?.let { kelvinToCelsius(it) } ?: "--"}°C",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineSmall
             )
         }
     }

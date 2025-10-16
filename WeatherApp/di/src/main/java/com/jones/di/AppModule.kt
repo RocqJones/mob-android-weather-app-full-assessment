@@ -19,7 +19,7 @@ val appModule =
         single { FavouritesPlacesUseCase(get()) }
 
         // ViewModel
-        viewModel { WeatherViewModel(get(), get(), get()) }
+        viewModel { WeatherViewModel(get(), get(), get(), get()) }
         viewModel { FavoritesViewModel(get()) }
     }
 

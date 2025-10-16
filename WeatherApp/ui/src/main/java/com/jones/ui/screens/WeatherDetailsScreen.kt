@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -26,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -34,7 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
@@ -42,8 +41,12 @@ import com.jones.core.util.kelvinToCelsius
 import com.jones.core.util.kelvinToFahrenheit
 import com.jones.domain.model.CurrentWeather
 import com.jones.domain.model.Forecast
+import com.jones.ui.R
 import com.jones.ui.components.ForecastCard
 import com.jones.ui.components.OfflineMessage
+import com.jones.ui.components.TextBold
+import com.jones.ui.components.TextMedium
+import com.jones.ui.components.TextRegular
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
 import java.util.Locale
@@ -58,12 +61,12 @@ fun WeatherDetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Details") },
+                title = { TextMedium(stringResource(R.string.details)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
@@ -147,8 +150,8 @@ private fun WeatherDetailsContent(
                 WeatherDetailsCard(weather = it)
                 Spacer(modifier = Modifier.height(24.dp))
             } ?: run {
-                Text(
-                    text = "No current weather data available",
+                TextRegular(
+                    text = stringResource(R.string.no_current_weather_data_available),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(24.dp))
@@ -156,10 +159,9 @@ private fun WeatherDetailsContent(
         }
 
         item {
-            Text(
+            TextBold(
                 text = "Extended Forecast",
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -167,8 +169,8 @@ private fun WeatherDetailsContent(
         when {
             forecast.isNullOrEmpty() -> {
                 item {
-                    Text(
-                        text = "No forecast data available",
+                    TextRegular(
+                        text = stringResource(R.string.no_forecast_data_available),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -192,19 +194,18 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = "Additional Information",
+            TextBold(
+                text = stringResource(R.string.additional_information),
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            DetailRow(label = "City", value = weather.cityName ?: "Unknown")
+            DetailRow(label = stringResource(R.string.city), value = weather.cityName ?: "Unknown")
 
             weather.latitude?.let { lat ->
                 weather.longitude?.let { lon ->
                     DetailRow(
-                        label = "Coordinates",
+                        label = stringResource(R.string.coordinates),
                         value = "${"%.4f".format(lat)}, ${"%.4f".format(lon)}"
                     )
                 }
@@ -212,14 +213,14 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
 
             weather.temperature?.let {
                 DetailRow(
-                    label = "Temperature",
+                    label = stringResource(R.string.temperature),
                     value = "${kelvinToCelsius(it)}°C (${kelvinToFahrenheit(it)}°F)"
                 )
             }
 
             weather.weatherDescription?.let {
                 DetailRow(
-                    label = "Condition",
+                    label = stringResource(R.string.condition),
                     value = it.replaceFirstChar { char ->
                         if (char.isLowerCase()) char.titlecase(Locale.getDefault()) else char.toString()
                     }
@@ -227,12 +228,12 @@ private fun WeatherDetailsCard(weather: CurrentWeather) {
             }
 
             weather.weatherIcon?.let {
-                DetailRow(label = "Icon Code", value = it)
+                DetailRow(label = stringResource(R.string.icon_code), value = it)
             }
 
             weather.timestamp?.let {
                 DetailRow(
-                    label = "Last Updated",
+                    label = stringResource(R.string.last_updated),
                     value = formatFullTimestamp(it)
                 )
             }
@@ -248,16 +249,15 @@ private fun DetailRow(label: String, value: String) {
             .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
+        TextRegular(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
         )
-        Text(
+        TextMedium(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium,
             modifier = Modifier.weight(1f)
         )
     }
@@ -283,8 +283,8 @@ private fun ErrorContent(
                     containerColor = MaterialTheme.colorScheme.errorContainer
                 )
             ) {
-                Text(
-                    text = "⚠️ No Internet Connection",
+                TextMedium(
+                    text = stringResource(R.string.no_internet_connection),
                     modifier = Modifier.padding(16.dp),
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     style = MaterialTheme.typography.titleMedium
@@ -295,22 +295,22 @@ private fun ErrorContent(
 
         Icon(
             imageVector = Icons.Default.Warning,
-            contentDescription = "Error",
+            contentDescription = stringResource(R.string.error),
             tint = MaterialTheme.colorScheme.error,
             modifier = Modifier.size(64.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "Something went wrong",
+        TextBold(
+            text = stringResource(R.string.something_went_wrong),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.error
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
+        TextRegular(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -319,7 +319,7 @@ private fun ErrorContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = onRetry) {
-            Text("Retry")
+            TextMedium(stringResource(R.string.retry))
         }
     }
 }
