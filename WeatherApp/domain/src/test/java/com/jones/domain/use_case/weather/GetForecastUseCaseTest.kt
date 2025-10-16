@@ -1,7 +1,7 @@
-package com.jones.domain.use_case
+package com.jones.domain.use_case.weather
 
-import com.jones.data.local.entity.ForecastEntity
-import com.jones.data.repository.WeatherRepository
+import com.jones.domain.model.Forecast
+import com.jones.domain.repository.WeatherRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -35,29 +35,21 @@ class GetForecastUseCaseTest {
         val apiKey = "test_api_key"
         val count = 7
         val mockForecast = listOf(
-            ForecastEntity(
+            Forecast(
                 id = 1,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697529600L,
+                dateText = "2025-10-17 12:00:00",
                 temperature = 298.15,
                 weatherMain = "Clear",
                 weatherDescription = "clear sky",
-                weatherIcon = "01d",
-                dateText = "2025-10-17 12:00:00"
+                weatherIcon = "01d"
             ),
-            ForecastEntity(
+            Forecast(
                 id = 2,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697616000L,
+                dateText = "2025-10-18 12:00:00",
                 temperature = 295.15,
                 weatherMain = "Clouds",
                 weatherDescription = "few clouds",
-                weatherIcon = "02d",
-                dateText = "2025-10-18 12:00:00"
+                weatherIcon = "02d"
             )
         )
 
@@ -142,41 +134,29 @@ class GetForecastUseCaseTest {
         val apiKey = "test_api_key"
         val count = 7
         val mixedWeatherForecast = listOf(
-            ForecastEntity(
+            Forecast(
                 id = 1,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697529600L,
+                dateText = "2025-10-17 12:00:00",
                 temperature = 298.15,
                 weatherMain = "Clear",
                 weatherDescription = "clear sky",
-                weatherIcon = "01d",
-                dateText = "2025-10-17 12:00:00"
+                weatherIcon = "01d"
             ),
-            ForecastEntity(
+            Forecast(
                 id = 2,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697616000L,
+                dateText = "2025-10-18 12:00:00",
                 temperature = 290.15,
                 weatherMain = "Rain",
                 weatherDescription = "moderate rain",
-                weatherIcon = "10d",
-                dateText = "2025-10-18 12:00:00"
+                weatherIcon = "10d"
             ),
-            ForecastEntity(
+            Forecast(
                 id = 3,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697702400L,
+                dateText = "2025-10-19 12:00:00",
                 temperature = 293.15,
                 weatherMain = "Snow",
                 weatherDescription = "light snow",
-                weatherIcon = "13d",
-                dateText = "2025-10-19 12:00:00"
+                weatherIcon = "13d"
             )
         )
 
@@ -201,17 +181,13 @@ class GetForecastUseCaseTest {
         val apiKey = "test_api_key"
         val count = 7
         val orderedForecast = (1..5).map { index ->
-            ForecastEntity(
+            Forecast(
                 id = index,
-                cityName = "Nairobi",
-                latitude = latitude,
-                longitude = longitude,
-                timestamp = 1697529600L + (index * 86400L),
+                dateText = "2025-10-${17 + index} 12:00:00",
                 temperature = 298.15,
                 weatherMain = "Clear",
                 weatherDescription = "clear sky",
-                weatherIcon = "01d",
-                dateText = "2025-10-${17 + index} 12:00:00"
+                weatherIcon = "01d"
             )
         }
 
@@ -228,4 +204,3 @@ class GetForecastUseCaseTest {
         }
     }
 }
-

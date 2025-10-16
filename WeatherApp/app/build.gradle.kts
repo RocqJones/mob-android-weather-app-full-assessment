@@ -20,6 +20,7 @@ android {
         val properties = org.jetbrains.kotlin.konan.properties.Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
         buildConfigField("String", "WEATHER_API_KEY", "\"${properties.getProperty("WEATHER_API_KEY")}\"")
+        buildConfigField("String", "PLACES_API_KEY", "\"${properties.getProperty("PLACES_API_KEY")}\"")
     }
 
     buildTypes {

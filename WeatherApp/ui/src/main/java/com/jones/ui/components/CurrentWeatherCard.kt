@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
 import com.jones.core.util.kelvinToCelsius
-import com.jones.data.local.entity.CurrentWeatherEntity
+import com.jones.domain.model.CurrentWeather
 import com.jones.ui.util.getWeatherIcon
 import java.util.Locale
 
 @Composable
 fun CurrentWeatherCard(
-    weather: CurrentWeatherEntity,
+    weather: CurrentWeather,
     navController: NavController? = null
 ) {
     Card(

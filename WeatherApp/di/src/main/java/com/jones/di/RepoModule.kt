@@ -1,7 +1,9 @@
 package com.jones.di
 
-import com.jones.data.repository.WeatherRepository
+import com.jones.data.repository.FavoritePlaceRepositoryImpl
 import com.jones.data.repository.WeatherRepositoryImpl
+import com.jones.domain.repository.FavoritePlaceRepository
+import com.jones.domain.repository.WeatherRepository
 import org.koin.dsl.module
 
 /**
@@ -15,6 +17,12 @@ val repositoryModule =
                 currentWeatherDao = get(),
                 forecastDao = get(),
                 networkConnectivityService = get(),
+            )
+        }
+
+        single<FavoritePlaceRepository> {
+            FavoritePlaceRepositoryImpl(
+                favoritePlaceDao = get()
             )
         }
     }

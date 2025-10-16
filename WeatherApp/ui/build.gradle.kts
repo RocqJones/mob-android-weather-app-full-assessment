@@ -52,6 +52,16 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+
+    // Location Services
+    implementation(libs.play.services.location)
+
+    // Google Places SDK
+    implementation(libs.places)
+
     // Modules
     implementation(project(":core"))
     implementation(project(":data"))

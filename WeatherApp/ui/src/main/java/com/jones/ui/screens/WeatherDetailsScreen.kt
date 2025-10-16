@@ -40,8 +40,8 @@ import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
 import com.jones.core.util.kelvinToCelsius
 import com.jones.core.util.kelvinToFahrenheit
-import com.jones.data.local.entity.CurrentWeatherEntity
-import com.jones.data.local.entity.ForecastEntity
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.model.Forecast
 import com.jones.ui.components.ForecastCard
 import com.jones.ui.components.OfflineMessage
 import com.jones.ui.state.WeatherUiState
@@ -58,7 +58,7 @@ fun WeatherDetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Weather Details") },
+                title = { Text("Details") },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
@@ -127,8 +127,8 @@ fun WeatherDetailsScreen(
 
 @Composable
 private fun WeatherDetailsContent(
-    currentWeather: CurrentWeatherEntity?,
-    forecast: List<ForecastEntity>?,
+    currentWeather: CurrentWeather?,
+    forecast: List<Forecast>?,
     isOnline: Boolean
 ) {
     LazyColumn(
@@ -184,7 +184,7 @@ private fun WeatherDetailsContent(
 }
 
 @Composable
-private fun WeatherDetailsCard(weather: CurrentWeatherEntity) {
+private fun WeatherDetailsCard(weather: CurrentWeather) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

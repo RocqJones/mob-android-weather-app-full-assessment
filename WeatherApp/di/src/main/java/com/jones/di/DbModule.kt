@@ -21,4 +21,5 @@ val databaseModule =
 
         single { get<WeatherDatabase>().currentWeatherDao() }
         single { get<WeatherDatabase>().forecastDao() }
+        single { get<WeatherDatabase>().favoritePlaceDao() }
     }

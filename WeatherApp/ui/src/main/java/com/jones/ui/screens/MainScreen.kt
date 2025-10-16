@@ -4,6 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,19 +16,48 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.jones.data.local.entity.CurrentWeatherEntity
-import com.jones.data.local.entity.ForecastEntity
+import com.jones.domain.model.CurrentWeather
+import com.jones.domain.model.Forecast
 import com.jones.ui.components.*
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     uiState: WeatherUiState,
     onRetry: () -> Unit,
     navController: NavController? = null
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Home") },
+                actions = {
+                    IconButton(onClick = {
+                        navController?.navigate("place_search")
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add Place"
+                        )
+                    }
+                    IconButton(onClick = {
+                        navController?.navigate("favorites")
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = "Favorites"
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            )
+        }
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,8 +116,8 @@ fun HomeScreen(
 
 @Composable
 fun WeatherContent(
-    currentWeather: CurrentWeatherEntity?,
-    forecast: List<ForecastEntity>?,
+    currentWeather: CurrentWeather?,
+    forecast: List<Forecast>?,
     isOnline: Boolean,
     navController: NavController?
 ) {

@@ -10,13 +10,13 @@ This project uses modularization and MVVM architecture for scalability and maint
 - **core**: Shared utilities, constants, base classes, network connectivity service, location services.
 - **di**: Dependency injection modules (Koin configuration for Retrofit, Room, Repositories).
 - **ui**: Modular presentation layer with MVVM architecture
-  - `screens/`: Screen-level composables
+  - `screens/`: Screen-level composables (Home, Favorites, Place Search, Weather Details)
   - `components/`: Reusable UI components
-  - `viewmodel/`: ViewModels for state management
+  - `viewmodel/`: ViewModels for state management (WeatherViewModel, FavoritesViewModel)
   - `state/`: UI state classes
   - `location/`: Location composables and state management
   - `util/`: UI utilities (weather backgrounds, icons)
-- **domain**: Business logic, use cases, domain models.
+- **domain**: Business logic, use cases, domain models (independent core layer).
 - **data**: Repositories, data sources, API (Retrofit), offline support (Room DB), sync service.
 
 ### Tech Stack
@@ -27,7 +27,7 @@ This project uses modularization and MVVM architecture for scalability and maint
 - Gson - JSON serialization/deserialization
 
 **Local Database:**
-- Room - Offline data persistence
+- Room - Offline data persistence (weather cache + favorite places)
 
 **Dependency Injection:**
 - Koin - Lightweight DI framework
@@ -55,6 +55,11 @@ This project uses modularization and MVVM architecture for scalability and maint
 - Current Weather: `/data/2.5/weather`
 - 5-Day Forecast: `/data/2.5/forecast`
 - API Key: Securely stored in `local.properties`
+
+**Google Places API:**
+- Place Autocomplete with overlay mode
+- Real-time place search with coordinates
+- Integrated with favorites management
 
 ### Offline-First Architecture
 
@@ -84,14 +89,19 @@ The app implements a robust offline-first strategy:
 app
  ├─ data
  ├─ domain
- ├─ di → core, data
+ ├─ di → core, data, domain
  ├─ ui
  └─ core
 
-data → core
+data → domain, core
  ├─ Retrofit (API)
  ├─ Room (Database)
  └─ Network Service
+
+domain (independent)
+ ├─ Domain Models
+ ├─ Repository Interfaces
+ └─ Use Cases
 
 core
  ├─ Location Services
@@ -103,9 +113,12 @@ core
 
 ✅ Modular architecture for scalability  
 ✅ MVVM pattern with clear separation of concerns  
+✅ Clean Architecture with independent domain layer  
 ✅ Offline-first with Room database caching  
 ✅ Real-time network monitoring and auto-sync  
 ✅ Automatic location detection with runtime permissions  
+✅ **Favorite places management with persistent storage**  
+✅ **Place search with coordinates-based weather lookup**  
 ✅ Dynamic weather-based backgrounds and icons  
 ✅ Reactive UI with Kotlin Flow  
 ✅ Dependency injection with Koin  
@@ -116,7 +129,8 @@ core
 ✅ Code quality enforcement with KtLint  
 ✅ Error handling with Result sealed class  
 ✅ Material Design 3 theming  
-✅ Composable location state management  
+✅ Composable location state management
+✅ **Comprehensive unit test coverage (TDD)**
 
 ### Security & Permissions
 
@@ -133,17 +147,30 @@ core
 ### Development Setup
 
 1. Clone the repository
-2. Add `WEATHER_API_KEY=your_api_key_here` to `local.properties`
-3. Sync Gradle dependencies
-4. Run the app
-5. Grant location permission when prompted
+2. Create `local.properties` file in the root directory
+3. Add the following API keys:
+   ```
+   WEATHER_API_KEY=your_openweather_api_key_here
+   PLACES_API_KEY=your_google_places_api_key_here
+   ```
+4. Update `PlaceSearchScreen.kt` line 38 to use your API key:
+   ```kotlin
+   Places.initialize(context.applicationContext, BuildConfig.PLACES_API_KEY)
+   ```
+5. Sync Gradle dependencies
+6. Run the app
+7. Grant location permission when prompted
+
+**Getting API Keys:**
+- **OpenWeatherMap**: Sign up at [openweathermap.org](https://openweathermap.org/api)
+- **Google Places**: Enable Places API in [Google Cloud Console](https://console.cloud.google.com/)
 
 ### UI Components
-- **Screens:** - User-facing screens
-- **Reusable Components:** - reusable UI elements
-- **ViewModels:** - State management for screens
-- **State Classes:** - UI state representations
-- **Location Composable:** - Location permission and fetching
+- **Screens:** Home, Favorites, Place Search, Weather Details
+- **Reusable Components:** Weather cards, forecast items, offline/error messages
+- **ViewModels:** WeatherViewModel, FavoritesViewModel
+- **State Classes:** UI state representations
+- **Location Composable:** Location permission and fetching
 
 ### Code Quality
 

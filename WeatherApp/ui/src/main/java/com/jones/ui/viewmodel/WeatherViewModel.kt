@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.jones.core.constants.Constants
 import com.jones.core.location.Coordinates
 import com.jones.data.sync.WeatherSyncService
-import com.jones.domain.use_case.GetCurrentWeatherUseCase
-import com.jones.domain.use_case.GetForecastUseCase
+import com.jones.domain.use_case.weather.GetCurrentWeatherUseCase
+import com.jones.domain.use_case.weather.GetForecastUseCase
 import com.jones.ui.state.WeatherUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
