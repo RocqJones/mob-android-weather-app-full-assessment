@@ -1,4 +1,4 @@
-package com.jones.core.util
+package com.jones.core.utils
 
 /**
  * Enum for different weather conditions.

@@ -1,4 +1,4 @@
-package com.jones.core.util
+package com.jones.core.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

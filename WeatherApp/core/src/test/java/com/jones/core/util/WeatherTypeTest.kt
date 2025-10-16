@@ -1,5 +1,6 @@
 package com.jones.core.util
 
+import com.jones.core.utils.WeatherType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

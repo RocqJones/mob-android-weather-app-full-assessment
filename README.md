@@ -232,9 +232,13 @@ The project includes comprehensive unit test coverage across all layers:
 - ✅ **Flow Testing** with proper collection
 - ✅ **Edge Cases** including null handling, empty states, and error scenarios
 
+<p align="start">
+    <img src="screenshots_recording/image.png" alt="Test Coverage Report">
+</p>
+
 ## Recording & screenshots
 - **Recording:** [Demo Video](screenshots_recording/weather_app_demo.mp4)
-- **YouTube Short Demo:**
+- **Short Demo:**
 [![Watch Demo on YouTube](https://img.youtube.com/vi/59qa-hhL-20/0.jpg)](https://youtube.com/shorts/59qa-hhL-20?feature=share)
 
 - **Screenshots:**

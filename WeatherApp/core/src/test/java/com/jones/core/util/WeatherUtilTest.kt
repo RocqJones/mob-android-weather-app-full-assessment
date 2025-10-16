@@ -1,5 +1,9 @@
 package com.jones.core.util
 
+import com.jones.core.utils.formatForecastDate
+import com.jones.core.utils.formatTimestamp
+import com.jones.core.utils.kelvinToCelsius
+import com.jones.core.utils.kelvinToFahrenheit
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

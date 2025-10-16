@@ -1,6 +1,7 @@
 package com.jones.ui.viewmodel
 
 import com.jones.core.location.Coordinates
+import com.jones.core.network.NetworkConnectivityService
 import com.jones.data.sync.WeatherSyncService
 import com.jones.domain.model.CurrentWeather
 import com.jones.domain.model.Forecast
@@ -32,6 +33,7 @@ class WeatherViewModelTest {
     private lateinit var getCurrentWeatherUseCase: GetCurrentWeatherUseCase
     private lateinit var getForecastUseCase: GetForecastUseCase
     private lateinit var weatherSyncService: WeatherSyncService
+    private lateinit var networkConnectivityService: NetworkConnectivityService
     private lateinit var viewModel: WeatherViewModel
 
     private val testDispatcher = UnconfinedTestDispatcher()
@@ -42,6 +44,7 @@ class WeatherViewModelTest {
         getCurrentWeatherUseCase = mockk(relaxed = true)
         getForecastUseCase = mockk(relaxed = true)
         weatherSyncService = mockk(relaxed = true)
+        networkConnectivityService = mockk(relaxed = true)
 
         every { weatherSyncService.startNetworkMonitoring(any()) } returns Unit
     }
@@ -54,7 +57,7 @@ class WeatherViewModelTest {
     @Test
     fun `viewModel starts network monitoring on initialization`() {
         // When
-        viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService)
+        viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService, networkConnectivityService)
 
         // Then
         verify { weatherSyncService.startNetworkMonitoring(any()) }
@@ -93,7 +96,7 @@ class WeatherViewModelTest {
             coEvery { getCurrentWeatherUseCase.invoke(latitude, longitude, any()) } returns flowOf(mockWeather)
             coEvery { getForecastUseCase.invoke(latitude, longitude, any(), any()) } returns flowOf(mockForecast)
 
-            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService)
+            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService, networkConnectivityService)
 
             // When
             viewModel.updateLocation(Coordinates(latitude, longitude))
@@ -115,7 +118,7 @@ class WeatherViewModelTest {
             coEvery { getCurrentWeatherUseCase.invoke(any(), any(), any()) } returns flowOf(null)
             coEvery { getForecastUseCase.invoke(any(), any(), any(), any()) } returns flowOf(emptyList())
 
-            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService)
+            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService, networkConnectivityService)
 
             // When
             viewModel.fetchWeather()
@@ -131,7 +134,7 @@ class WeatherViewModelTest {
     @Test
     fun `uiState starts with Loading state`() {
         // Given & When
-        viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService)
+        viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService, networkConnectivityService)
 
         // Then
         assertTrue(viewModel.uiState.value is WeatherUiState.Loading)
@@ -147,7 +150,7 @@ class WeatherViewModelTest {
             coEvery { getCurrentWeatherUseCase.invoke(any(), any(), any()) } returns flowOf(null)
             coEvery { getForecastUseCase.invoke(any(), any(), any(), any()) } returns flowOf(emptyList())
 
-            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService)
+            viewModel = WeatherViewModel(getCurrentWeatherUseCase, getForecastUseCase, weatherSyncService, networkConnectivityService)
 
             // When
             viewModel.updateLocation(firstCoords)

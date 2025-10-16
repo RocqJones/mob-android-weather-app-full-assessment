@@ -1,6 +1,6 @@
 package com.jones.ui.util
 
-import com.jones.core.util.WeatherType
+import com.jones.core.utils.WeatherType
 import com.jones.ui.R
 
 /**
