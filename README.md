@@ -6,14 +6,24 @@ This project uses modularization and MVVM architecture for scalability and maint
 Recording demonstrating key features and app flow:
 - [Demo Video](screenshots_recording/weather_app_demo.mp4)
 
-Key screenshots:
-- ![Screenshot1](screenshots_recording/screenshot1.png)
-- ![Screenshot2](screenshots_recording/screenshot2.png)
-- ![Screenshot3](screenshots_recording/screenshot3.png)
-- ![Screenshot4](screenshots_recording/screenshot4.png)
-- ![Screenshot5](screenshots_recording/screenshot5.png)
-- ![Screenshot5](screenshots_recording/screenshot6.png)
-- ![Screenshot5](screenshots_recording/screenshot7.png)
+<video src="screenshots_recording/weather_app_demo.mp4" controls="controls" style="max-width: 300px;">
+  Your browser does not support the video tag.
+</video>
+
+**Screenshots:**
+
+<p align="center">
+    <img src="screenshots_recording/screenshot1.png" width="300" alt="Home Screen">
+    <img src="screenshots_recording/screenshot2.png" width="300" alt="Weather Details">
+    <img src="screenshots_recording/screenshot3.png" width="300" alt="Favorites">
+    <img src="screenshots_recording/screenshot4.png" width="300" alt="Search Place">
+</p>
+
+<p align="center">
+    <img src="screenshots_recording/screenshot5.png" width="300" alt="Dark Mode">
+    <img src="screenshots_recording/screenshot6.png" width="300" alt="Offline Mode">
+    <img src="screenshots_recording/screenshot7.png" width="300" alt="Extended Forecast">
+</p>
 
 ### Architecture Overview
 
@@ -61,6 +71,9 @@ Key screenshots:
 - Jetpack Compose - Modern declarative UI
 - Material3 - Material Design components
 - Navigation Compose - Screen navigation
+
+**Typography:**
+- [Poppins Font Family](https://fonts.google.com/specimen/Poppins) from Google Fonts - Custom typography with Regular, Medium, and Bold weights for consistent and modern text styling throughout the app
 
 ### API Integration
 
