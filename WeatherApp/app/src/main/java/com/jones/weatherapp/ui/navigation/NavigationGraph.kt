@@ -1,11 +1,6 @@
 package com.jones.weatherapp.ui.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,22 +28,16 @@ fun NavigationGraph(weatherViewModel: WeatherViewModel = koinViewModel()) {
     NavHost(
         navController = navController,
         startDestination = Screen.WeatherHome.route,
+        modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.WeatherHome.route) {
-            Box(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(WindowInsets.statusBars.asPaddingValues()),
-            ) {
-                val uiState by weatherViewModel.uiState.collectAsState()
+            val uiState by weatherViewModel.uiState.collectAsState()
 
-                HomeScreen(
-                    uiState = uiState,
-                    onRetry = { weatherViewModel.fetchWeather() },
-                    navController = navController,
-                )
-            }
+            HomeScreen(
+                uiState = uiState,
+                onRetry = { weatherViewModel.fetchWeather() },
+                navController = navController,
+            )
         }
 
         composable(Screen.WeatherDetails.route) {
