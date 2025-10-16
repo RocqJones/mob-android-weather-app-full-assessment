@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jones.core.constants.Constants
 import com.jones.core.location.Coordinates
+import com.jones.core.network.NetworkConnectivityService
 import com.jones.data.sync.WeatherSyncService
 import com.jones.domain.use_case.weather.GetCurrentWeatherUseCase
 import com.jones.domain.use_case.weather.GetForecastUseCase
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getForecastUseCase: GetForecastUseCase,
-    private val weatherSyncService: WeatherSyncService
+    private val weatherSyncService: WeatherSyncService,
+    private val networkConnectivityService: NetworkConnectivityService
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<WeatherUiState>(WeatherUiState.Loading)
@@ -31,12 +33,35 @@ class WeatherViewModel(
 
     init {
         startNetworkMonitoring()
+        observeNetworkChanges()
     }
 
     private fun startNetworkMonitoring() {
         weatherSyncService.startNetworkMonitoring {
             currentCoordinates?.let { coords ->
                 fetchWeatherForLocation(coords.latitude, coords.longitude)
+            }
+        }
+    }
+
+    private fun observeNetworkChanges() {
+        viewModelScope.launch {
+            networkConnectivityService.observeNetworkConnectivity().collect { isOnline ->
+                val currentState = _uiState.value
+                when {
+                    currentState is WeatherUiState.Success && !isOnline -> {
+                        _uiState.value = WeatherUiState.Offline(
+                            currentWeather = currentState.currentWeather,
+                            forecast = currentState.forecast
+                        )
+                    }
+                    currentState is WeatherUiState.Offline && isOnline -> {
+                        // Network came back online - refresh data
+                        currentCoordinates?.let { coords ->
+                            fetchWeatherForLocation(coords.latitude, coords.longitude)
+                        }
+                    }
+                }
             }
         }
     }
