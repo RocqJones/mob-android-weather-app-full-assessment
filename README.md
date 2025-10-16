@@ -234,6 +234,7 @@ The project includes comprehensive unit test coverage across all layers:
 
 ## Recording & screenshots
 - **Recording:** [Demo Video](screenshots_recording/weather_app_demo.mp4)
+- **YouTube Short Demo:**
 [![Watch Demo on YouTube](https://img.youtube.com/vi/59qa-hhL-20/0.jpg)](https://youtube.com/shorts/59qa-hhL-20?feature=share)
 
 - **Screenshots:**
