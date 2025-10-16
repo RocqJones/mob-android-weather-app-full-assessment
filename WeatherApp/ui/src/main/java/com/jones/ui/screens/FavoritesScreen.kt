@@ -12,10 +12,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.domain.model.FavoritePlace
+import com.jones.ui.R
 import com.jones.ui.viewmodel.FavoritesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -31,12 +33,12 @@ fun FavoritesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Favorite Places") },
+                title = { Text(stringResource(R.string.favorite_places)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
@@ -52,51 +54,54 @@ fun FavoritesScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (favoritePlaces.isEmpty()) {
-                // Empty state
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = null,
-                        modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "No Favorite Places",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Add places to see weather for different locations",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(favoritePlaces, key = { it.id }) { place ->
-                        FavoritePlaceItem(
-                            place = place,
-                            onClick = {
-                                onPlaceSelected(place.latitude, place.longitude)
-                                navController.navigateUp()
-                            },
-                            onDelete = {
-                                favoritesViewModel.deleteFavoritePlace(place.id)
-                            }
+            when {
+                favoritePlaces.isEmpty() -> {
+                    // Empty state
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.LocationOn,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = stringResource(R.string.no_favorite_places),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(R.string.add_places_to_see_weather_for_different_locations),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(favoritePlaces, key = { it.id }) { place ->
+                            FavoritePlaceItem(
+                                place = place,
+                                onClick = {
+                                    onPlaceSelected(place.latitude, place.longitude)
+                                    navController.navigateUp()
+                                },
+                                onDelete = {
+                                    favoritesViewModel.deleteFavoritePlace(place.id)
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -115,7 +120,7 @@ fun FavoritePlaceItem(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Delete Favorite Place") },
+            title = { Text(stringResource(R.string.delete_favorite_place)) },
             text = { Text("Are you sure you want to remove '${place.name}' from favorites?") },
             confirmButton = {
                 TextButton(
@@ -124,12 +129,12 @@ fun FavoritePlaceItem(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -175,7 +180,7 @@ fun FavoritePlaceItem(
             IconButton(onClick = { showDeleteDialog = true }) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.delete),
                     tint = MaterialTheme.colorScheme.error
                 )
             }

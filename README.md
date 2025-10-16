@@ -172,6 +172,14 @@ core
 - **State Classes:** UI state representations
 - **Location Composable:** Location permission and fetching
 
+### Recording & screenshots
+- [Demo Video](https://www.loom.com/share/your_demo_video_link)
+- ![Screenshot1](screenshots/screenshot1.png)
+- ![Screenshot2](screenshots/screenshot2.png)
+- ![Screenshot3](screenshots/screenshot3.png)
+- ![Screenshot4](screenshots/screenshot4.png)
+- ![Screenshot5](screenshots/screenshot5.png)
+
 ### Code Quality
 
 Run code formatting:

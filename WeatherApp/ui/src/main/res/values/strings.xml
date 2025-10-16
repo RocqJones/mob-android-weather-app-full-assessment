@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">Home</string>
+    <string name="add_place">Add Place</string>
+    <string name="favorites">Favorites</string>
+    <string name="no_current_weather_data_available">No current weather data available</string>
+    <string name="no_forecast_data_available">No forecast data available</string>
+    <string name="places_api_initialization_failed">Places API initialization failed</string>
+    <string name="unknown_place">Unknown Place</string>
+    <string name="added_successfully">%1$s added successfully</string>
+    <string name="user_cancelled_place_selection">User cancelled place selection</string>
+    <string name="search_location">Search Location</string>
+    <string name="find_a_location">Find a Location</string>
+    <string name="search_for_cities_worldwide_to_add_to_your_favorites">Search for cities worldwide to add to your favorites</string>
+    <string name="search_for_a_place">Search for a Place</string>
+    <string name="back">Back</string>
+    <string name="details">Details</string>
+    <string name="city">City</string>
+    <string name="additional_information">Additional Information</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="temperature">Temperature</string>
+    <string name="condition">Condition</string>
+    <string name="icon_code">Icon Code</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="no_internet_connection">⚠️ No Internet Connection</string>
+    <string name="error">Error</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="retry">Retry</string>
+    <string name="favorite_places">Favorite Places</string>
+    <string name="no_favorite_places">No Favorite Places</string>
+    <string name="add_places_to_see_weather_for_different_locations">Add places to see weather for different locations</string>
+    <string name="delete_favorite_place">Delete Favorite Place</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="unknown_location">Unknown Location</string>
+    <string name="no_description">No description</string>
+    <string name="weather_icon">Weather Icon</string>
+    <string name="you_are_offline_showing_cached_data">⚠️ You are offline. Showing cached data.</string>
+</resources>

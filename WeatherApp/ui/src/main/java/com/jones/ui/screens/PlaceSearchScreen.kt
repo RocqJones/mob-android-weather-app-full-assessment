@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -23,6 +24,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.jones.core.constants.Constants
+import com.jones.ui.R
 import com.jones.ui.viewmodel.FavoritesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -45,7 +47,7 @@ fun PlaceSearchScreen(
                     Constants.PLACES_API_KEY
                 )
             } catch (e: Exception) {
-                Log.e(tag, "Places API initialization failed", e)
+                Log.e(tag, context.getString(R.string.places_api_initialization_failed), e)
             }
         }
     }
@@ -61,7 +63,7 @@ fun PlaceSearchScreen(
                         Log.i(tag, "Place: ${place.name}, ${place.latLng}, ${place.id}")
 
                         place.latLng?.let { latLng ->
-                            val placeName = place.name ?: "Unknown Place"
+                            val placeName = place.name ?: context.getString(R.string.unknown_place)
 
                             // Add to favorites
                             favoritesViewModel.addFavoritePlace(
@@ -75,7 +77,7 @@ fun PlaceSearchScreen(
 
                             Toast.makeText(
                                 context,
-                                "$placeName added successfully",
+                                context.getString(R.string.added_successfully, placeName),
                                 Toast.LENGTH_SHORT
                             ).show()
 
@@ -97,7 +99,7 @@ fun PlaceSearchScreen(
                 }
 
                 Activity.RESULT_CANCELED -> {
-                    Log.i(tag, "User cancelled place selection")
+                    Log.i(tag, context.getString(R.string.user_cancelled_place_selection))
                 }
             }
         } catch (e: Exception) {
@@ -124,12 +126,12 @@ fun PlaceSearchScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Search Location") },
+                title = { Text(stringResource(R.string.search_location)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
@@ -158,7 +160,7 @@ fun PlaceSearchScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Find a Location",
+                text = stringResource(R.string.find_a_location),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -166,7 +168,7 @@ fun PlaceSearchScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Search for cities worldwide to add to your favorites",
+                text = stringResource(R.string.search_for_cities_worldwide_to_add_to_your_favorites),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -185,7 +187,7 @@ fun PlaceSearchScreen(
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Search for a Place")
+                Text(stringResource(R.string.search_for_a_place))
             }
 
             Spacer(modifier = Modifier.height(16.dp))

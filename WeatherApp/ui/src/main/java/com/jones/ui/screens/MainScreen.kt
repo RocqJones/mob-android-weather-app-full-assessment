@@ -13,11 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.domain.model.CurrentWeather
 import com.jones.domain.model.Forecast
+import com.jones.ui.R
 import com.jones.ui.components.*
 import com.jones.ui.state.WeatherUiState
 import com.jones.ui.util.getWeatherBackground
@@ -32,14 +34,14 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Home") },
+                title = { Text(stringResource(R.string.home)) },
                 actions = {
                     IconButton(onClick = {
                         navController?.navigate("place_search")
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = "Add Place"
+                            contentDescription = stringResource(R.string.add_place)
                         )
                     }
                     IconButton(onClick = {
@@ -47,7 +49,7 @@ fun HomeScreen(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Favorite,
-                            contentDescription = "Favorites"
+                            contentDescription = stringResource(R.string.favorites)
                         )
                     }
                 },
@@ -132,7 +134,7 @@ fun WeatherContent(
                 Spacer(modifier = Modifier.height(24.dp))
             } ?: run {
                 Text(
-                    text = "No current weather data available",
+                    text = stringResource(R.string.no_current_weather_data_available),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(24.dp))
@@ -152,7 +154,7 @@ fun WeatherContent(
             forecast.isNullOrEmpty() -> {
                 item {
                     Text(
-                        text = "No forecast data available",
+                        text = stringResource(R.string.no_forecast_data_available),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

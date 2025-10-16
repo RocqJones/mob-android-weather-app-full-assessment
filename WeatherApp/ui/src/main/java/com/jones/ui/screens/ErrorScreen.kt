@@ -7,6 +7,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.jones.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -31,7 +33,7 @@ fun ErrorScreen(
                 )
             ) {
                 Text(
-                    text = "⚠️ No Internet Connection",
+                    text = stringResource(R.string.no_internet_connection),
                     modifier = Modifier.padding(16.dp),
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     style = MaterialTheme.typography.titleMedium,
@@ -43,7 +45,7 @@ fun ErrorScreen(
 
         Icon(
             imageVector = Icons.Default.Warning,
-            contentDescription = "Error",
+            contentDescription = stringResource(R.string.error),
             tint = MaterialTheme.colorScheme.error,
             modifier = Modifier.size(64.dp)
         )
@@ -51,7 +53,7 @@ fun ErrorScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Something went wrong",
+            text = stringResource(R.string.something_went_wrong),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.error
         )
@@ -68,7 +70,7 @@ fun ErrorScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = onRetry) {
-            Text("Retry")
+            Text(stringResource(R.string.retry))
         }
     }
 }

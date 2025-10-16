@@ -7,11 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jones.core.util.formatForecastDate
 import com.jones.core.util.kelvinToCelsius
 import com.jones.domain.model.Forecast
+import com.jones.ui.R
 import com.jones.ui.util.getWeatherIcon
 import java.util.*
 
@@ -38,7 +40,7 @@ fun ForecastCard(forecast: Forecast) {
 
                 Icon(
                     painter = painterResource(id = getWeatherIcon(forecast.weatherMain)),
-                    contentDescription = "Weather Icon",
+                    contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier.size(32.dp),
                     tint = Color.Unspecified
                 )
@@ -46,7 +48,7 @@ fun ForecastCard(forecast: Forecast) {
                 Text(
                     text = forecast.weatherDescription?.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                    } ?: "No description",
+                    } ?: stringResource(R.string.no_description),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

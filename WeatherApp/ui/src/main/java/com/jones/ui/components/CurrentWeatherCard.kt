@@ -18,12 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jones.core.util.formatFullTimestamp
 import com.jones.core.util.kelvinToCelsius
 import com.jones.domain.model.CurrentWeather
+import com.jones.ui.R
 import com.jones.ui.util.getWeatherIcon
 import java.util.Locale
 
@@ -48,14 +50,14 @@ fun CurrentWeatherCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = weather.cityName ?: "Unknown Location",
+                    text = weather.cityName ?: stringResource(R.string.unknown_location),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
                 Icon(
                     painter = painterResource(id = getWeatherIcon(weather.weatherMain)),
-                    contentDescription = "Weather Icon",
+                    contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier.size(48.dp),
                     tint = Color.Unspecified
                 )
@@ -71,7 +73,7 @@ fun CurrentWeatherCard(
             Text(
                 text = weather.weatherDescription?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                } ?: "No description",
+                } ?: stringResource(R.string.no_description),
                 style = MaterialTheme.typography.bodyMedium
             )
 
