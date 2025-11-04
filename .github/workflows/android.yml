@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: WeatherApp  # 👈 All commands below run from this path
+        working-directory: WeatherApp  # Working path
 
     steps:
       - name: Checkout code
@@ -29,7 +29,7 @@ jobs:
       - name: Create local.properties
         run: |
           echo "WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}" > local.properties
-          echo "PLACES_API_KEY=${{ secrets.PLACES_API_KEY }}" >> local.properties  # 👈 append, not overwrite
+          echo "PLACES_API_KEY=${{ secrets.PLACES_API_KEY }}" >> local.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -152,4 +152,4 @@ jobs:
         with:
           name: ktlint-reports
           path: WeatherApp/**/build/reports/ktlint/
-          retention-days: 1
+          retention-days: 7
