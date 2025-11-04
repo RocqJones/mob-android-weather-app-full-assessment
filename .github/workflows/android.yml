@@ -152,4 +152,4 @@ jobs:
         with:
           name: ktlint-reports
           path: WeatherApp/**/build/reports/ktlint/
-          retention-days: 7
+          retention-days: 1
